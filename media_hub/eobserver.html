@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>经济观察报 · 媒体智库</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1f2937; --sub:#6b7280;
+  --line:#e5eaf1; --org1:#E8720C; --org2:#F5A623; --org-deep:#B85A08;
+  --red:#dc2626; --blue:#2563eb;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;}
+.wrap{max-width:1220px;margin:0 auto;padding:0 22px;}
+a{color:inherit;}
+/* ===== 品牌头部 ===== */
+.brand{background:linear-gradient(120deg,#B85A08,#E8720C 55%,#F5A623);color:#fff;padding:14px 0 26px;}
+.crumb{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 13px;text-decoration:none;margin-bottom:16px;transition:.15s;}
+.crumb:hover{background:rgba(255,255,255,.25);}
+.brow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.blogo{width:52px;height:52px;border-radius:13px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.38);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;}
+.brand h1{font-size:23px;}
+.brand .en{font-size:11px;opacity:.8;letter-spacing:1.5px;margin-top:3px;}
+.badges{display:flex;gap:8px;margin-left:auto;padding-bottom:6px;flex-wrap:wrap;align-items:center;}
+.badges span{font-size:10.5px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);border-radius:6px;padding:4px 11px;}
+.sq{margin-top:16px;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:11px;padding:11px 16px;max-width:560px;}
+.sq input{border:none;outline:none;background:transparent;color:#fff;font-size:14px;flex:1;}
+.sq input::placeholder{color:rgba(255,255,255,.75);}
+/* 人名搜索：大浮窗（复用 .modal-* 结构）内的检索信息块与切换条 */
+.psearch{display:flex;align-items:center;gap:9px;background:#f6f7f9;border:1px solid var(--line);border-radius:10px;padding:9px 14px;margin-bottom:15px;}
+.psearch input{border:none;outline:none;background:transparent;flex:1;font-size:13.5px;color:var(--ink);}
+.psearch input::placeholder{color:#9aa3af;}
+.ptag{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:5px;background:#eef4ff;color:#3b6fd4;font-size:10.5px;font-weight:600;vertical-align:middle;}
+.pwatch{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px;align-items:center;}
+.pwatch .pwl{font-size:11px;color:var(--sub);font-weight:700;margin-right:2px;}
+.pwatch .pw{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:4px 12px;cursor:pointer;color:var(--sub);}
+.pwatch .pw:hover{border-color:var(--org1);color:var(--org1);}
+.pwatch .pw.on{background:var(--org1);border-color:var(--org1);color:#fff;}
+.pmeta{background:#fbf7f2;border:1px solid #f0e6d8;border-radius:11px;padding:13px 16px;margin-bottom:16px;}
+.pmeta .pmrow{display:flex;gap:8px;font-size:12px;line-height:1.7;margin-bottom:5px;}
+.pmeta .pmrow:last-child{margin-bottom:0;}
+.pmeta .pmrow b{color:#7a4a08;font-weight:700;min-width:44px;flex-shrink:0;}
+.pmeta .pmrow span{color:var(--ink);flex:1;}
+.pmeta .pbrief{font-size:12px;color:#5a5a5a;line-height:1.75;border-top:1px dashed #ece2d4;padding-top:8px;margin-top:8px;}
+.pnote{font-size:12px;color:var(--sub);line-height:1.7;padding:2px 0;}
+.sq b{font-size:15px;}
+/* ===== 布局 ===== */
+.layout{display:flex;gap:22px;align-items:flex-start;padding:26px 22px 60px;max-width:1220px;margin:0 auto;}
+.side{position:sticky;top:18px;width:168px;flex-shrink:0;display:flex;flex-direction:column;gap:5px;}
+.side a{font-size:13px;color:var(--sub);text-decoration:none;padding:10px 13px;border-radius:9px;border:1px solid transparent;transition:.15s;line-height:1.5;}
+.side a:hover{color:var(--org1);background:#fff;}
+.side a.on{color:var(--org-deep);background:#fff;border-color:#f2d9bc;font-weight:700;box-shadow:0 3px 10px rgba(232,114,12,.08);}
+.side .cap{font-size:10.5px;color:#b0b8c4;padding:12px 13px 4px;letter-spacing:1px;}
+main{flex:1;min-width:0;display:flex;flex-direction:column;gap:24px;}
+/* ===== 通用 section ===== */
+section{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:24px 26px;}
+section h2{font-size:17px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
+section h2 .no{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--org1),var(--org2));color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+section h2 .cap{font-size:11px;color:#9aa5b3;font-weight:400;margin-left:6px;}
+.subnote{font-size:12px;color:var(--sub);margin-bottom:16px;line-height:1.7;}
+/* ===== 总览 ===== */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:14px 0 18px;}
+.stat{border:1px solid var(--line);border-radius:11px;padding:14px;text-align:center;background:linear-gradient(180deg,#fff,#faf7f3);}
+.stat b{font-size:22px;color:var(--org1);display:block;}
+.stat span{font-size:11px;color:var(--sub);}
+.duo{display:flex;gap:14px;align-items:stretch;flex-wrap:wrap;}
+.blk{flex:1;min-width:230px;border:1px solid #f0dcc4;border-radius:12px;padding:16px;background:#fdf9f3;}
+.blk h4{font-size:14px;color:var(--org-deep);margin-bottom:7px;}
+.blk p{font-size:12px;color:var(--sub);line-height:1.7;margin-bottom:9px;}
+.blk .top{display:inline-block;font-size:11.5px;background:#fff;border:1px solid #f0dcc4;border-radius:7px;padding:5px 10px;color:var(--ink);font-weight:600;}
+.mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--org1);font-size:12px;font-weight:700;}
+.mid .ar{font-size:24px;}
+/* ===== 组织架构：双轨页签 ===== */
+.orgtabs{display:flex;gap:8px;margin:14px 0 18px;border-bottom:2px solid var(--line);padding-bottom:0;}
+.otab{border:none;background:none;font-size:13.5px;color:var(--sub);padding:10px 18px;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;font-family:inherit;transition:.15s;}
+.otab b{color:var(--org1);margin-right:5px;}
+.otab.on{color:var(--org-deep);font-weight:700;border-bottom-color:var(--org1);}
+.pane{display:none;}
+.pane.on{display:block;animation:fade .25s;}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+/* ---- 人事线：横向组织图（同「部门详情」同款 .chart/.cnode：根在顶横条，子级横向并排） ---- */
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--sub);margin-bottom:14px;align-items:center;}
+.lg{display:inline-flex;align-items:center;gap:5px;}
+.lg i{width:10px;height:10px;border-radius:3px;display:inline-block;}
+.lv{font-size:9.5px;color:#fff;border-radius:4px;padding:1.5px 6px;font-weight:600;flex-shrink:0;}
+.lv.L1{background:#B85A08;} .lv.L2{background:#E8720C;} .lv.L3{background:#F09A3E;} .lv.L4{background:#F5B96B;color:#7a4a08;} .lv.L5{background:#FBD9A8;color:#7a4a08;}
+.lv.DP{background:#5470a0;}
+.mark{font-size:10px;color:var(--red);border:1px solid #f0c4bf;border-radius:4px;padding:1px 6px;font-weight:600;background:#fdf0ef;}
+/* ---- 人事线：纵向缩进树 ---- */
+.ptree{border:1px solid var(--line);border-radius:12px;padding:18px 14px;background:#fbfcfe;overflow-x:auto;}
+.node{position:relative;padding-left:26px;}
+.node.root{padding-left:0;}
+.node .row{display:flex;align-items:flex-start;gap:9px;position:relative;flex-wrap:wrap;}
+.node:not(.root)::before{content:'';position:absolute;left:9px;top:-12px;bottom:14px;width:1.5px;background:#e2d6c5;}
+.node:last-child:not(.root)::before{bottom:auto;height:26px;}
+.node:not(.root) > .row::before{content:'';position:absolute;left:-17px;top:16px;width:16px;height:1.5px;background:#e2d6c5;}
+.pcard{border:1px solid var(--line);border-radius:10px;padding:9px 14px;background:#fff;transition:.15s;display:inline-block;margin:4px 0 10px;}
+.pcard:hover{border-color:#e8b06e;background:#fffcf7;box-shadow:0 3px 10px rgba(232,114,12,.09);}
+.pcard .pname{font-size:14px;font-weight:700;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.pcard .ptitle{font-size:11.5px;color:var(--org1);margin-top:3px;line-height:1.55;max-width:360px;}
+.pcard .pextra{font-size:10.5px;color:var(--sub);margin-top:4px;line-height:1.6;max-width:360px;}
+.kids{margin-left:9px;}
+.node.closed > .kids{display:none;}
+.toggle{cursor:pointer;user-select:none;}
+.toggle .caret{display:inline-block;transition:.2s;font-size:10px;color:#b08968;margin-right:2px;}
+.node.closed .caret{transform:rotate(-90deg);}
+.depttag{font-size:11px;color:#5470a0;background:#eef3fa;border:1px solid #d6e2f2;border-radius:6px;padding:2px 8px;}
+/* ---- 部门线：部门卡片 ---- */
+.dgroup{font-size:13px;font-weight:700;color:var(--org-deep);margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+.dgroup::after{content:'';flex:1;height:1px;background:#f0dcc4;}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.dcard{border:1px solid var(--line);border-radius:11px;padding:14px;cursor:pointer;transition:.15s;background:#fff;position:relative;}
+.dcard:hover{border-color:#e8b06e;transform:translateY(-2px);box-shadow:0 6px 16px rgba(232,114,12,.10);}
+.dcard.sel{border-color:var(--org1);box-shadow:0 0 0 3px rgba(232,114,12,.15);}
+.dcard h4{font-size:13.5px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.dcard .dtype{font-size:10px;color:var(--sub);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-weight:400;}
+.dcard .dhead{font-size:11.5px;color:var(--org1);margin-top:7px;font-weight:600;}
+.dcard .dchain{font-size:10.5px;color:var(--sub);margin-top:5px;line-height:1.55;}
+.dcard .mmbr{font-size:10.5px;color:var(--ink);margin-top:8px;line-height:1.7;border-top:1px dashed var(--line);padding-top:7px;}
+.dcard .mmbr b{color:var(--org-deep);font-weight:600;}
+.dcard .mtag{display:inline-block;background:#fff4ea;border:1px solid #f6d6b8;color:#a8590a;border-radius:5px;padding:1px 7px;margin:2px 4px 2px 0;font-size:10.5px;}
+.dcard .dnum{position:absolute;top:12px;right:13px;font-size:10.5px;color:#b0b8c4;}
+/* 部门详情：完整人事树状图 */
+.dept-detail{margin-top:20px;border:1px solid #f0dcc4;border-radius:13px;padding:20px;background:#fdfaf5;display:none;}
+.dept-detail.on{display:block;animation:fade .25s;}
+.dd-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;}
+.dd-head h3{font-size:16px;color:var(--org-deep);}
+.dd-close{margin-left:auto;border:1px solid #f0dcc4;background:#fff;border-radius:7px;padding:5px 13px;font-size:12px;cursor:pointer;color:var(--sub);}
+.dd-close:hover{color:var(--red);border-color:#f0c4bf;}
+.dd-note{font-size:11.5px;color:var(--sub);margin-bottom:18px;line-height:1.7;max-width:900px;word-wrap:break-word;overflow-wrap:break-word;}
+/* 部门详情：完整人事树状图（.chart/.cnode 居中组织图） */
+/* 自上而下组织图（CSS org chart，居中树状图） */
+.chart{overflow-x:auto;padding:8px 4px 14px;min-height:60px;}
+.chart ul{display:flex;justify-content:center;padding-top:22px;position:relative;width:max-content;margin:0 auto;}
+.chart li{list-style:none;text-align:center;position:relative;padding:22px 10px 0;display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.chart li::before,.chart li::after{content:'';position:absolute;top:0;right:50%;border-top:1.6px solid #e2c9a8;width:50%;height:22px;}
+.chart li::after{right:auto;left:50%;border-left:1.6px solid #e2c9a8;}
+.chart li:only-child::after,.chart li:only-child::before{display:none;}
+.chart li:only-child{padding-top:26px;}
+.chart li:first-child::before,.chart li:last-child::after{border:none;}
+.chart li:only-child{padding-top:0;}
+.chart ul ul::before{content:'';position:absolute;top:0;left:50%;border-left:1.6px solid #e2c9a8;height:22px;width:0;}
+.cnode{border:1.5px solid #f0dcc4;border-radius:10px;background:#fff;padding:10px 15px;min-width:118px;box-shadow:0 2px 8px rgba(184,90,8,.06);transition:.15s;}
+.cnode:hover{border-color:var(--org1);box-shadow:0 5px 14px rgba(232,114,12,.14);}
+.cnode .cn{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap;}
+.cnode .ct{font-size:10.5px;color:var(--org1);margin-top:3px;line-height:1.5;max-width:170px;}
+.cnode.trunk{background:linear-gradient(135deg,#B85A08,#E8720C);border:none;}
+.cnode.trunk .cn,.cnode.trunk .ct{color:#fff;}
+.cnode.dept{background:linear-gradient(135deg,#fff,#fdf3e5);}
+.cnode.ghost{border-style:dashed;color:var(--sub);}
+.cnode .cxl{font-size:10px;color:var(--sub);margin-top:3px;}
+/* ===== 产品 / 领导 / 沿革 / 更新记录 ===== */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+.prod{border:1px solid var(--line);border-radius:11px;padding:15px;background:linear-gradient(180deg,#fff,#fbf8f4);}
+.prod .pt{width:30px;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--org1),var(--org2));margin-bottom:9px;}
+.prod h4{font-size:13.5px;margin-bottom:6px;}
+.prod p{font-size:11.5px;color:var(--sub);line-height:1.7;}
+.prod .logo-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.prod .logo-row img{height:36px;width:auto;border-radius:6px;border:1px solid var(--line);background:#fff;}
+.leader-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.lcard{border:1px solid var(--line);border-radius:12px;padding:16px;position:relative;background:linear-gradient(180deg,#fff,#faf9f7);display:flex;gap:14px;cursor:pointer;transition:.15s;}
+.lcard:hover{border-color:#e8b06e;box-shadow:0 5px 14px rgba(232,114,12,.12);}
+.lcard::before{content:'';position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:linear-gradient(180deg,var(--org1),var(--org2));}
+.lavatar{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,var(--org1),var(--org2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;}
+.lname{font-size:15px;font-weight:700;color:var(--org-deep);display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.ltitle{font-size:12px;margin-top:4px;line-height:1.6;}
+.lbio{font-size:11px;color:var(--sub);margin-top:7px;line-height:1.7;border-top:1px dashed var(--line);padding-top:7px;}
+.tl{border-left:2px solid #f0dcc4;margin-left:6px;padding-left:22px;display:flex;flex-direction:column;gap:16px;}
+.tl-item{position:relative;}
+.tl-item::before{content:'';position:absolute;left:-28px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--org1);border:2.5px solid #fff;box-shadow:0 0 0 2px #f0dcc4;}
+.tl-item .y{font-size:12.5px;font-weight:700;color:var(--org-deep);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.tl-item .e{font-size:12.5px;color:var(--ink);line-height:1.75;margin-top:4px;}
+.tl-item.tbd::before{background:#fff;box-shadow:0 0 0 2px #f0c4bf;}
+.tbd-tag{font-size:10px;color:var(--red);border:1px solid #f0c4bf;border-radius:4px;padding:1px 6px;background:#fdf0ef;font-weight:600;}
+.cl-item{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:11px;padding:13px 15px;background:#fbfcfe;}
+.cl-item + .cl-item{margin-top:10px;}
+.cl-date{font-size:11.5px;color:var(--sub);flex-shrink:0;padding-top:2px;font-weight:600;}
+.cl-src{font-size:10.5px;border-radius:5px;padding:2.5px 9px;flex-shrink:0;font-weight:600;}
+.cl-src.doc{color:#1d4ed8;background:#e8effb;}
+.cl-src.chat{color:#047857;background:#e2f5ec;}
+.cl-src.audio{color:#7c3aed;background:#f0e9fb;}
+.cl-body{font-size:12.5px;line-height:1.7;}
+.cl-fields{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
+.cl-fields span{font-size:10px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:1.5px 7px;color:var(--sub);}
+/* 登记底表互通：飞书深链 + 溯源标注 */
+.reg-src{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:10.5px;color:#1d4ed8;background:#eef4ff;border:1px solid #cfe0fb;border-radius:6px;padding:3px 10px;text-decoration:none;font-weight:600;}
+.reg-src:hover{background:#dfeaff;}
+.reg-tag{display:inline-block;font-size:10px;border-radius:4px;padding:1.5px 7px;margin-left:6px;font-weight:600;}
+.reg-tag.feishu{color:#0e7a5f;background:#e6f5ef;border:1px solid #bfe5d6;}
+.reg-note{font-size:11.5px;color:var(--sub);background:#f7f9fc;border:1px dashed var(--line);border-radius:8px;padding:9px 13px;margin-bottom:13px;line-height:1.7;}
+.reg-note b{color:var(--org1);}
+.srctab{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px;}
+.srctab th,.srctab td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;line-height:1.6;}
+.srctab th{background:#f4f7fb;color:var(--sub);font-weight:600;white-space:nowrap;}
+.srctab a{color:#1d4ed8;text-decoration:none;font-size:11px;}
+.srctab a:hover{text-decoration:underline;}
+.st-badge{font-size:10px;border-radius:4px;padding:1.5px 7px;font-weight:600;white-space:nowrap;}
+.st-ok{color:#0e7a5f;background:#e6f5ef;} .st-miss{color:#b45309;background:#fdf3e3;} .st-unk{color:#6b7280;background:#f1f3f5;}
+/* 领导详情弹层 */
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;}
+.modal-back.on{display:flex;}
+.modal-card{background:#fff;border-radius:16px;max-width:780px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);position:relative;}
+.modal-head{background:linear-gradient(135deg,var(--org1),var(--org2));color:#fff;padding:22px 26px;}
+.modal-head h3{font-size:20px;}
+.modal-head .sub{font-size:13px;opacity:.9;margin-top:5px;}
+.modal-body{padding:22px 26px 28px;}
+.modal-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:8px;width:34px;height:34px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:rgba(255,255,255,.35);}
+/* 档案导出条 */
+.pexport{margin-top:13px;display:none;gap:8px;flex-wrap:wrap}
+.pex{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:8px;padding:4.5px 14px;font-size:12.5px;cursor:pointer;font-family:inherit;line-height:1.5}
+.pex:hover{background:rgba(255,255,255,.35)}
+.petoast{position:fixed;left:50%;bottom:38px;transform:translateX(-50%);background:#1F2733;color:#fff;padding:9px 20px;border-radius:10px;font-size:13.5px;z-index:10050;opacity:0;transition:opacity .25s;pointer-events:none;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.petoast.on{opacity:1}
+.dl-row{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px;}
+.dl-col{flex:1;min-width:220px;}
+.dl-col h5{font-size:13px;color:var(--org-deep);margin-bottom:7px;border-left:3px solid var(--org1);padding-left:8px;}
+.dl-col p{font-size:12px;color:var(--ink);line-height:1.75;}
+.dl-col .kv{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;margin-bottom:6px;}
+.dl-col .kv b{color:var(--sub);font-weight:600;min-width:60px;}
+.dl-col .kv span{color:var(--ink);}
+/* 搜索高亮 */
+.hl{background:#ffe3b3;border-radius:3px;padding:0 2px;}
+.dim{opacity:.3;}
+footer{padding:20px 0 34px;font-size:11.5px;color:var(--sub);text-align:center;line-height:1.9;}
+@media(max-width:860px){
+  .layout{flex-direction:column;}
+  .side{position:static;width:100%;flex-direction:row;flex-wrap:wrap;}
+  .side .cap{display:none;}
+  .badges{margin-left:0;}
+}
+</style>
+</head>
+<body>
+
+<header class="brand">
+  <div class="wrap">
+    <a class="crumb" href="../index.html?v=20261120-1757" target="_top">← 媒体智库中台（根目录标准入口）</a>
+    <div class="brow">
+      <div class="blogo">经</div>
+      <div>
+        <h1>经济观察报 <span style="font-size:12px;opacity:.8">The Economic Observer</span></h1>
+        <div class="en">EEO · 财经媒体 · 已建档 · 更新至 2026-09-01</div>
+      </div>
+      <div class="badges">
+        <span>双轨架构</span><span>四级建制</span><span>21 名中层以上</span><span>23 个媒体产品</span>
+      </div>
+    </div>
+    <div class="sq">🔍 <input id="q" type="text" placeholder="站内搜索：人名 / 职务 / 部门 / 产品…（如：文钊、总编辑、宏观研究院）"></div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="side" id="nav">
+    <div class="cap">本站导航</div>
+    <a href="#ov" class="on">① 机构总览</a>
+    <a href="#org">② 组织架构</a>
+    <a href="#prod">③ 媒体产品</a>
+    <a href="#leader">④ 重要领导简介</a>
+    <a href="#hist">⑤ 历史沿革</a>
+    <a href="#cl">⑥ 更新记录</a>
+  </nav>
+
+  <main>
+
+    <!-- ① 机构总览 -->
+    <section id="ov">
+      <h2><span class="no">①</span>机构总览</h2>
+      <p class="subnote">创刊于 2001 年的全国性财经周报，山东出品、北京运营，以橙色新闻纸为标志。双轨架构：报社（采编）+ 经观传媒（经营），中心建制采编，兼有智库型研究院。截至 2026 年初全网累计粉丝超 3500 万。</p>
+      <div class="stats">
+        <div class="stat"><b>2</b><span>板块（双轨）</span></div>
+        <div class="stat"><b>4</b><span>级建制</span></div>
+        <div class="stat"><b>17</b><span>中心 / 部门</span></div>
+        <div class="stat"><b>21+</b><span>中层以上人员</span></div>
+        <div class="stat"><b>23</b><span>媒体产品</span></div>
+      </div>
+      <div class="duo">
+        <div class="blk">
+          <h4>经济观察报社 · 采编板块</h4>
+          <p>报纸、经济观察网、APP 的内容生产主体，中心建制采编。最高负责人：刘坚（社长、总编辑）。</p>
+          <span class="top">内容端：宏观政策采编中心 / 科技TMT采编中心 / 金融市场采编中心 / 产业消费采编中心 / 评论&深度调查部 / 全媒体新闻内容部</span>
+        </div>
+        <div class="mid"><span class="ar">⇄</span><span>双轨<br>架构</span></div>
+        <div class="blk">
+          <h4>经观传媒 · 经营板块</h4>
+          <p>广告、活动、商业化与全媒体经营主体。最高负责人：王咏静（董事长、总裁）。</p>
+          <span class="top">运营端：大消费事业部 / 综合产业事业部 / 新媒体整合传播中心 / 广告营销中心 / 智库调研中心</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ② 组织架构（双轨） -->
+    <section id="org">
+      <h2><span class="no">②</span>组织架构<span class="cap">双轨视图：按人看层级 / 按部门看建制 · 来源《260817 经济观察报档案》PPT</span></h2>
+
+      <div class="orgtabs">
+        <button class="otab on" data-v="person"><b>人事线</b>人员层级树</button>
+        <button class="otab" data-v="dept"><b>部门线</b>部门架构 · 点部门展开人事树状图</button>
+      </div>
+
+      <div class="legend">
+        <span class="lg"><i style="background:#B85A08"></i>L1 决策层</span>
+        <span class="lg"><i style="background:#E8720C"></i>L2 社委 / 副总编辑层</span>
+        <span class="lg"><i style="background:#F09A3E"></i>L3 编委 / 中心主任层</span>
+        <span class="lg"><i style="background:#F5B96B"></i>L4 部门主任层</span>
+        <span class="lg"><i style="background:#FBD9A8"></i>L5 记者 / 研究员层</span>
+        <span class="lg"><i style="background:#5470a0"></i>机构 / 研究院</span>
+      </div>
+
+      <!-- 人事线 -->
+      <div class="pane on" id="pane-person">
+        <p class="subnote">以「人」为纲：从双轨最高负责人向下逐级展开，实线为已确认分管关系；点击人名可折叠 / 展开其分管条线。</p>
+        <div id="personTree" class="ptree"></div>
+      </div>
+
+      <!-- 部门线 -->
+      <div class="pane" id="pane-dept">
+        <p class="subnote">以「部门」为纲：全部中心 / 部门 / 研究院按板块归类。点击任一部门卡片，下方展开该部门<b>完整人事树状图</b>（从板块最高负责人到部门成员的全链条）。</p>
+        <div id="deptGrid"></div>
+        <div class="dept-detail" id="deptDetail">
+          <div class="dd-head">
+            <h3 id="ddName"></h3>
+            <button class="dd-close" onclick="closeDept()">收起 ✕</button>
+          </div>
+          <div class="dd-note" id="ddNote"></div>
+          <div class="chart" id="ddChart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ 媒体产品 -->
+    <section id="prod">
+      <h2><span class="no">③</span>媒体产品<span class="cap">products · 23 个全量产品</span></h2>
+      <div class="prod-grid" id="prodGrid"></div>
+    </section>
+
+    <!-- ④ 重要领导简介 -->
+    <section id="leader">
+      <h2><span class="no">④</span>重要领导简介<span class="cap" id="leaderCount">点击卡片查看完整档案 · 各档案按素材实际字段呈现</span></h2>
+      <div class="leader-grid" id="leaderGrid"></div>
+    </section>
+
+    <!-- ⑤ 历史沿革 -->
+    <section id="hist">
+      <h2><span class="no">⑤</span>历史沿革<span class="cap">history</span></h2>
+      <div class="tl" id="histTL"></div>
+    </section>
+
+    <!-- ⑥ 更新记录 -->
+    <section id="cl">
+      <h2><span class="no">⑥</span>更新记录<span class="cap">changelog · 每次变动留痕可回溯</span></h2>
+      <div class="reg-note" id="regNote">数据来源：飞书「媒体中台·登记底表」③变更与版本表 · 每条可点开飞书原记录核对</div>
+      <div id="clList"></div>
+    </section>
+
+    <!-- ⑦ 字段出处（登记底表②表） -->
+    <section id="src">
+      <h2><span class="no">⑦</span>字段出处<span class="cap">字段级溯源 · 来自飞书登记底表②字段级出处</span></h2>
+      <div class="reg-note">关键字段的取值、来源页码、时点与状态以飞书登记底表为准；<b>未披露项一律中性标注，不编造</b>。点「原记录」跳飞书。</div>
+      <div id="srcList"></div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  数据来源：《260817 经济观察报档案》PPT + 组织构架 xlsx + 客户聊天反馈 · 每次更新自动写入 changelog<br>
+  本页为完整版样板站：正式版由 <b>data/media/eobserver.json</b> 自动生成，与中台同源同数据 · 「人事线 / 部门线」双轨视图
+</footer>
+
+<!-- 领导详情弹层 -->
+<div class="modal-back" id="modalBack" onclick="if(event.target===this)closeModal()">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="mName"></h3>
+      <div class="sub" id="mTitle"></div>
+      <div class="pexport" id="pExport">
+        <button class="pex" onclick="exportCopy()">⧉ 复制档案（粘贴进飞书）</button>
+        <button class="pex" onclick="exportWord()">⇩ 导出 Word</button>
+        <button class="pex" onclick="exportPDFFile()">⇩ 下载 PDF</button>
+        <button class="pex" onclick="exportPDF()">🖨 打印</button>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<!-- 登记底表快照（飞书 Base 三表导出，registry_export.py 生成）；?v= 与 SITE_V 同步 -->
+<script src="assets/registry_data.js?v=20261120-1757"></script>
+<script src="assets/authoritative_data.js?v=20261120-1757"></script>
+
+<script>
+/* 回中台链接：带站点版本号，绕过 CDN 边缘缓存里的旧快照（2026-09-29 修复"回中台不对"）
+   优先沿用来源链接 ?v=（从首页进入时子页 URL 自带），兜底常量与 index.html 的 SITE_V 同步 */
+(function(){
+  var v=null; try{ v=new URLSearchParams(location.search).get('v'); }catch(e){}
+  if(!v) v='20261120-1757';
+  var a=document.querySelector('a.crumb'); if(a) a.href='../index.html?v='+v;
+})();
+/* ============================================================
+   数据层 —— 人事树（人事线）与部门表（部门线）
+   来源：《260817 经济观察报档案》PPT（2026-08-17 更新）
+   ============================================================ */
+let PERSON_TREES = [
+{ title:'经济观察报社 · 采编板块', root:{
+  n:'刘坚', t:'社长、总编辑（采编板块最高负责人）', lv:'L1',
+  note:'2026-10-08 终版资料标题明确标注「即将退休」；新任社长人选未在本期终版资料中披露。',
+  ch:[
+    { n:'文钊', t:'执行总编辑、宏观经济研究院院长', lv:'L2', note:'总编辑日常副手；分管宏观经济研究院、宏观经济领域报道、评论与智库类内容、行业峰会对外发言', ch:[
+      { n:'宏观经济研究院', dept:true, t:'智库机构 · 院长由文钊兼任', lv:'DP' },
+    ]},
+    { n:'郭宏超', t:'副总编辑、经观传媒高级副总裁、董事', lv:'L2', note:'分管媒体运营体系、《现代广告》杂志、行业峰会 IP；负责采编与商业化业务协同联动', ch:[
+      { n:'媒体运营体系', dept:true, t:'新媒体编辑 / 短视频 / 运营 / 总编室 / 摄制部（2026-10-08 终版；总编室主任姓名未披露）', lv:'DP' },
+    ]},
+    { n:'邹卫国', t:'副总编辑、管理与创新案例研究院院长（兼大消费新闻部分管）', lv:'L2', note:'分管大消费新闻部、评论频道、观察家书评、商业案例智库、内容端行业峰会对外发言', ch:[
+      { n:'管理与创新案例研究院', dept:true, t:'智库机构 · 院长由邹卫国兼任', lv:'DP' },
+      { n:'张雅楠', t:'编委、城市与不动产新闻中心主任', lv:'L3' },
+    ]},
+    { n:'袁金秋', t:'编委、金融市场新闻中心主任（兼资本市场部主任）', lv:'L3' },
+    { n:'宋笛', t:'编委、政策与产业中心主编（兼大科创新闻部主任）、高级记者', lv:'L3' },
+    { n:'阿茹汗', t:'大消费一部主任', lv:'L4' },
+    { n:'高飞昌', t:'汽车与出行新闻中心主编', lv:'L3' },
+    { n:'蔡越坤', t:'资深记者（债券、信托、银行条线）', lv:'L4' },
+    { n:'郑淯心', t:'大消费二部主任', lv:'L4' },
+    { n:'杜涛', t:'政策新闻与研究部主任', lv:'L4' },
+    { n:'田国宝', t:'城市与不动产新闻部记者', lv:'L5' },
+    { n:'王雅洁', t:'ESG 创新部主任、高级记者', lv:'L4' },
+    { n:'宋馥李', t:'城市版主编、城市与政府事务研究院院长', lv:'L4' },
+    { n:'王义伟', t:'国际部主任（国际部主编）', lv:'L4' },
+    { n:'李微敖', t:'深度调查部首席记者', lv:'L4' },
+    { n:'栗新', t:'摄制部总监', lv:'L4' },
+    { n:'种昂', t:'山东新闻中心主任', lv:'L3' },
+    { n:'周继平', t:'广告营销中心负责人（驻广州）', lv:'L3' },
+    { n:'胡群', t:'金融市场研究院院长', lv:'L3' },
+  ]
+}},
+{ title:'经观传媒 · 经营板块', root:{
+  n:'王咏静', t:'董事长、总裁（经营板块最高负责人）', lv:'L1',
+  ch:[
+    { n:'郭宏超', t:'经观传媒高级副总裁、董事（兼报社副总编辑）', lv:'L2' },
+    { n:'杜惠', t:'经观传媒高级副总裁、大消费事业部总经理（兼新媒体整合传播中心负责人）', lv:'L2' },
+    { n:'蒋晓雪', t:'时尚与文旅部总经理（兼《现代广告》杂志社总经理）', lv:'L3' },
+    { n:'张瑾', t:'品牌活动部负责人（品牌活动组委会）', lv:'L3' },
+  ]
+}},
+];
+
+/* 部门线：trunk = 板块；sup = 分管领导（null = 直属决策层） */
+let DEPTS = [
+  // —— 采编板块 · 经济观察报社 ——
+  { id:'macro',  g:'采编板块 · 经济观察报社', name:'宏观经济研究院', type:'智库机构', sup:'文钊',
+    head:{n:'文钊', t:'院长（兼）', lv:'L2'}, members:[
+      {n:'马政', t:'研究员', lv:'L5'},{n:'李晓丹', t:'日常负责人、研究员', lv:'L5'},
+      {n:'张景雯', t:'研究员', lv:'L5'},{n:'时明月', t:'研究员', lv:'L5'},{n:'吴若溪', t:'研究员', lv:'L5'},
+      {n:'周时进', t:'研究员', lv:'L5'},{n:'吴雨彤', t:'研究员', lv:'L5'},{n:'姚洋', t:'外部学术委员会主席（外部专家）', lv:'L5'}
+    ], desc:'宏观研究与重点深度报道支撑机构，院长由文钊兼任。' },
+  { id:'mgmt',   g:'采编板块 · 经济观察报社', name:'管理与创新案例研究院', type:'智库机构', sup:'邹卫国',
+    head:{n:'邹卫国', t:'院长（兼）', lv:'L2'}, members:[
+      {n:'马政', t:'研究员', lv:'L5'},{n:'李晓丹', t:'日常负责人、研究员', lv:'L5'},
+      {n:'张景雯', t:'研究员', lv:'L5'},{n:'时明月', t:'研究员', lv:'L5'},{n:'吴若溪', t:'研究员', lv:'L5'},
+      {n:'周时进', t:'研究员', lv:'L5'},{n:'吴雨彤', t:'研究员', lv:'L5'},{n:'姚洋', t:'外部学术委员会主席（外部专家）', lv:'L5'}
+    ], desc:'商业案例智库与内容端行业峰会，院长由邹卫国兼任。' },
+  { id:'fin',    g:'采编板块 · 经济观察报社', name:'金融市场新闻中心', type:'新闻中心', sup:null,
+    head:{n:'袁金秋', t:'主任（编委）', lv:'L3'},
+    members:[
+      {n:'欧阳晓红', t:'首席记者', lv:'L4', loc:'BJ'},
+      {n:'蔡越坤', t:'资本市场部主任', lv:'L4', loc:'BJ'},
+      {n:'牛钰', t:'记者', lv:'L4', loc:'BJ'},
+      {n:'王雅洁', t:'ESG 创新部主任、高级记者', lv:'L4', loc:'BJ'},
+      {n:'洪小棠', t:'财富与资产管理部主任', lv:'L4', loc:'BJ'},
+      {n:'姜鑫', t:'资深记者', lv:'L4', loc:'BJ'},
+      {n:'冯雨', t:'记者（银行、金融监管）', lv:'L4', loc:'BJ'},
+      {n:'张思敏', t:'记者（保险行业）', lv:'L4', loc:'BJ'}
+    ], desc:'金融市场条线报道，含金融机构、ESG、财富与资管等子方向。' },
+  { id:'fi',     g:'采编板块 · 经济观察报社', name:'金融机构部', type:'新闻部', sup:'袁金秋',
+    head:{n:'蔡越坤', t:'资深记者（债券、信托、银行条线）', lv:'L4', loc:'BJ'}, members:[{n:'欧阳晓红', t:'首席记者（金融机构新闻部）', lv:'L4', loc:'BJ'}], desc:'2026-10-08 终版：蔡越坤任资深记者，负责债券、信托、银行领域报道；资本市场部不再单独设部，相关条线并入金融市场新闻中心四大板块统筹。' },
+  { id:'policy', g:'采编板块 · 经济观察报社', name:'政策与产业中心', type:'新闻中心', sup:null,
+    head:{n:'宋笛', t:'主编、高级记者（编委）', lv:'L3'},
+    members:[
+      {n:'杜涛', t:'政策新闻与研究部主任', lv:'L4', loc:'BJ'},
+      {n:'田进', t:'政策新闻与研究部记者', lv:'L5', loc:'BJ'},
+      {n:'刑祺欣', t:'大科创新闻部记者', lv:'L5', loc:'BJ'},
+      {n:'孙常悦', t:'大科创新闻部记者', lv:'L5', loc:'BJ'},
+      {n:'王昕', t:'大科创新闻部记者', lv:'L5', loc:'BJ'},
+      {n:'张旭东', t:'大科创新闻部记者', lv:'L5', loc:'BJ'},
+      {n:'郭蓉', t:'大科创新闻部记者', lv:'L5', loc:'BJ'}
+    ], desc:'政策与产业、大科创条线报道。' },
+  { id:'city',   g:'采编板块 · 经济观察报社', name:'城市与不动产新闻部', type:'新闻部', sup:null,
+    head:{n:'张雅楠', t:'主任（编委·兼）', lv:'L3'},
+    members:[{n:'田宝国', t:'记者', lv:'L5', loc:'BJ'}], desc:'城市与不动产条线。' },
+  { id:'tmt',    g:'采编板块 · 经济观察报社', name:'TMT 新闻部', type:'新闻部', sup:null,
+    head:{n:'任晓宁', t:'主编', lv:'L4'}, members:[{n:'钱玉娟', t:'记者', lv:'L5', loc:'BJ'}], desc:'科技 / 互联网条线。' },
+  { id:'health', g:'采编板块 · 经济观察报社', name:'大健康新闻部', type:'新闻部', sup:null,
+    head:{n:'张英', t:'主任', lv:'L4'}, members:[{n:'张铃', t:'记者', lv:'L5', loc:'BJ'}], desc:'医疗健康条线。' },
+  { id:'auto',   g:'采编板块 · 经济观察报社', name:'汽车与出行新闻中心', type:'新闻中心', sup:null,
+    head:{n:'高飞昌', t:'主编', lv:'L3'}, members:[{n:'周信', t:'行业产业报道部记者', lv:'L5', loc:'BJ'}], desc:'汽车与出行产业条线。' },
+  { id:'intl',   g:'采编板块 · 经济观察报社', name:'国际部（海外新闻部）', type:'新闻部', sup:null,
+    head:{n:'王义伟', t:'主任、主编', lv:'L4'}, members:[{n:'顾雪', t:'记者', lv:'L5', loc:'BJ'}], desc:'国际财经条线。' },
+  { id:'deep',   g:'采编板块 · 经济观察报社', name:'深度调查部', type:'新闻部', sup:null,
+    head:{n:'李微敖', t:'首席记者', lv:'L4', loc:'BJ'}, members:[], desc:'重大法治事件、资本市场深度调查类报道采写，重大深度专题策划。2026-10-08 终版明确李微敖任首席记者。' },
+  { id:'cons',   g:'采编板块 · 经济观察报社', name:'大消费新闻部', type:'新闻部', sup:'邹卫国',
+    head:{n:'邹卫国', t:'分管副总编辑', lv:'L2'}, members:[
+      {n:'阿茹汗', t:'大消费一部主任', lv:'L4', loc:'BJ'},
+      {n:'郑淯心', t:'大消费二部主任', lv:'L4', loc:'BJ'},
+      {n:'郑明珠', t:'记者', lv:'L5', loc:'BJ'},
+      {n:'罗文利', t:'记者', lv:'L5', loc:'BJ'},
+      {n:'刘可', t:'记者', lv:'L5', loc:'BJ'},
+      {n:'李烨', t:'记者', lv:'L5', loc:'BJ'}
+    ], desc:'消费产业条线，由邹卫国分管。' },
+  { id:'comment', g:'采编板块 · 经济观察报社', name:'评论频道', type:'新闻部', sup:'邹卫国',
+    head:{n:'言咏', t:'主编', lv:'L3'}, members:[{n:'马欢', t:'编辑', lv:'L5', loc:'BJ'}], desc:'社论与评论业务。' },
+  { id:'observer', g:'采编板块 · 经济观察报社', name:'观察家书评（观察家版组）', type:'版面 / 研究院', sup:null,
+    head:{n:'宋馥李', t:'主编（城市与政府事务部研究院院长 兼）', lv:'L4'}, members:[], desc:'时政、经济、文化评论与书评。' },
+  { id:'esg',    g:'采编板块 · 经济观察报社', name:'ESG 创新部', type:'创新部门', sup:'袁金秋',
+    head:{n:'王雅洁', t:'主任、高级记者', lv:'L4'}, members:[], desc:'ESG 议题与可持续报道创新。' },
+  { id:'local',  g:'采编板块 · 经济观察报社', name:'地方新闻中心', type:'新闻中心', sup:null,
+    head:{n:'周增军', t:'华南新闻中心分社社长（分管华南/华东/山东三地）', lv:'L3', loc:'GZ'},
+    members:[
+      {n:'黄一帆', t:'华东新闻中心记者', lv:'L4', loc:'SH'},
+      {n:'吴容', t:'华东新闻中心记者', lv:'L4', loc:'SH'},
+      {n:'周增军', t:'华南新闻中心分社社长', lv:'L3', loc:'GZ'},
+      {n:'张锐', t:'华南新闻中心记者', lv:'L4', loc:'GZ'},
+      {n:'种昂', t:'山东新闻中心主任', lv:'L3', loc:'JN'}
+    ], desc:'上海 / 华南 / 山东三大地方站点采编。' },
+  { id:'omni',   g:'经营板块 · 经观传媒', name:'全媒体条线（媒体运营体系）', type:'经营条线', sup:'郭宏超',
+    head:{n:'郭宏超', t:'副总编辑、经观传媒高级副总裁、董事', lv:'L2'}, members:[
+      {n:'王丽娜', t:'资深全媒体编辑、专题项目副主编', lv:'L4', loc:'BJ'},
+      {n:'周雪', t:'新媒体编辑', lv:'L5', loc:'BJ'},
+      {n:'张晶玲', t:'短视频内容主编', lv:'L4', loc:'BJ'},
+      {n:'刘畅', t:'运营', lv:'L5', loc:'BJ'},
+      {n:'高洁', t:'校对、出版终审', lv:'L5', loc:'BJ'},
+      {n:'栗新', t:'摄制部总监', lv:'L4', loc:'BJ'},
+      {n:'***', t:'总编室主任', lv:'L4', loc:'BJ'}
+    ], desc:'全媒体编采与媒体运营体系（新媒体编辑、短视频、运营、总编室、摄制部），分管领导：郭宏超。2026-10-08 终版新增栗新（摄制部总监）；总编室主任姓名未在本期终版资料中披露。' },
+  { id:'fashion', g:'经营板块 · 经观传媒', name:'时尚与文旅部', type:'经营事业部', sup:null,
+    head:{n:'蒋晓雪', t:'总经理（兼《现代广告》杂志社总经理）', lv:'L2'}, members:[], desc:'时尚、文旅行业商业化运营。' },
+  { id:'brand',  g:'经营板块 · 经观传媒', name:'品牌活动部（品牌活动组委会）', type:'经营事业部', sup:null,
+    head:{n:'张瑾', t:'品牌活动部负责人（品牌活动组委会）', lv:'L3'}, members:[{n:'于子钧', t:'行业论坛落地执行', lv:'L4', loc:'BJ'},{n:'李晔雯', t:'峰会项目运营', lv:'L4', loc:'BJ'},{n:'唐宁', t:'品牌活动执行落地', lv:'L4', loc:'BJ'}], desc:'行业论坛、峰会项目与品牌活动落地执行。2026-10-08 终版：张瑾任负责人，于子钧/李晔雯/唐宁为执行岗。' },
+  { id:'consbiz', g:'经营板块 · 经观传媒', name:'大消费事业部', type:'经营事业部', sup:'王咏静',
+    head:{n:'杜惠', t:'总经理（经观传媒高级副总裁，兼新媒体整合传播中心负责人）', lv:'L2'}, members:[
+      {n:'祝丽佳', t:'总监', lv:'L4', loc:'BJ'},
+      {n:'罗雯', t:'大消费事业部项目执行', lv:'L5', loc:'BJ'},
+      {n:'高杉', t:'大消费事业部项目执行', lv:'L5', loc:'BJ'}
+    ], desc:'消费行业客户营销、品牌活动、行业峰会、白皮书 IP、消费产业商业化运营。2026-10-08 终版层级：杜惠任总经理、祝丽佳任总监，罗雯与高杉为项目执行。' },
+  { id:'synbiz', g:'经营板块 · 经观传媒', name:'综合产业事业部', type:'经营事业部', sup:'王咏静',
+    head:{n:'***', t:'综合产业事业部负责人（2026-10-08 终版未披露姓名）', lv:'L3'}, members:[
+      {n:'秦峰', t:'综合产业事业部业务执行', lv:'L5', loc:'BJ'}
+    ], desc:'综合产业商业化运营。2026-10-08 终版：综合产业事业部负责人一职未在该版资料中披露姓名，执行岗为秦峰。' },
+  { id:'ad',     g:'经营板块 · 经观传媒', name:'广告营销中心', type:'经营事业部', sup:null,
+    head:{n:'周继平', t:'广告营销中心负责人（驻广州）', lv:'L3', loc:'GZ'}, members:[
+      {n:'陈曦', t:'广告营销中心业务执行', lv:'L5', loc:'BJ'},
+      {n:'林楠', t:'广告营销中心业务执行', lv:'L5', loc:'BJ'},
+      {n:'顾佳', t:'广告营销中心业务执行', lv:'L5', loc:'BJ'}
+    ], desc:'广告营销业务。2026-10-08 终版：周继平任广告营销中心负责人（驻广州），执行岗为陈曦、林楠、顾佳。' },
+  { id:'newmedia', g:'经营板块 · 经观传媒', name:'新媒体整合传播中心', type:'经营事业部', sup:'杜惠',
+    head:{n:'杜惠', t:'负责人（经观传媒副总裁 兼）', lv:'L2'}, members:[
+      {n:'陈曦', t:'（新媒体整合传播中心）', lv:'L4', loc:'BJ'}
+    ], desc:'新媒体整合传播，由杜惠兼任负责人。' },
+  { id:'urban',  g:'采编板块 · 经济观察报社', name:'城市版 · 城市与政府事务研究院', type:'版面 / 研究院', sup:null,
+    head:{n:'宋馥李', t:'主编、院长', lv:'L4'}, members:[], desc:'城市版面与政府事务研究。' },
+];
+
+/* 媒体产品（23 个） */
+let PRODUCTS = [
+  {cat:'官方渠道', name:'经济观察报（报纸）', desc:'旗舰纸媒，橙色新闻纸，每周一出版。', logos:['img_001.png']},
+  {cat:'官方渠道', name:'经济观察网', desc:'官方网站，即时财经资讯。', logos:['img_003.png']},
+  {cat:'官方渠道', name:'经观 APP', desc:'移动端应用，全媒体内容入口。', logos:['img_002.png']},
+  {cat:'官方渠道', name:'经观官微', desc:'微信公众号矩阵。', logos:['img_005.png']},
+  {cat:'官方渠道', name:'经观传媒', desc:'经营板块官方品牌。', logos:['img_007.png']},
+  {cat:'公益商城', name:'经观橙心', desc:'公益项目品牌。', logos:['img_004.png']},
+  {cat:'公益商城', name:'经观好物', desc:'电商商城品牌。', logos:['img_006.png']},
+  {cat:'新媒体', name:'经济观察报', desc:'新媒体账号。', logos:['img_001.png']},
+  {cat:'新媒体', name:'经济观察网', desc:'新媒体账号。', logos:['img_003.png']},
+  {cat:'新媒体', name:'经济观察研究院', desc:'智库研究新媒体。', logos:['img_022.png']},
+  {cat:'新媒体', name:'经观地产', desc:'房地产垂直新媒体。', logos:['img_008.png']},
+  {cat:'新媒体', name:'经观书评', desc:'书评与文化新媒体。', logos:['img_011.png']},
+  {cat:'新媒体', name:'上市公司研究', desc:'资本市场深度研究。', logos:['img_010.png']},
+  {cat:'新媒体', name:'观察家', desc:'时政与经济评论新媒体。', logos:['img_017.jpg']},
+  {cat:'新媒体', name:'经观大健康', desc:'医疗健康垂直新媒体。', logos:['img_009.png']},
+  {cat:'新媒体', name:'经观汽车', desc:'汽车与出行垂直新媒体。', logos:['img_012.png']},
+  {cat:'新媒体', name:'经观商业', desc:'商业与消费垂直新媒体。', logos:['img_013.png']},
+  {cat:'新媒体', name:'经观智讯', desc:'财经快讯与资讯新媒体。', logos:['img_014.png']},
+  {cat:'新媒体', name:'经观封面', desc:'视频账号。', logos:['img_015.png']},
+  {cat:'新媒体', name:'经观融视界', desc:'金融垂直视频新媒体。', logos:['img_019.png']},
+  {cat:'新媒体', name:'经观新科技', desc:'科技创新垂直新媒体。', logos:['img_016.png']},
+  {cat:'新媒体', name:'蓝筹地产', desc:'房地产蓝筹研究新媒体。', logos:['img_018.jpg']},
+  {cat:'新媒体', name:'TMT 新观察', desc:'科技产业新媒体（个人号，任晓宁）。', logos:['img_020.jpg']},
+];
+
+/* 核心高管（7 位） */
+let LEADERS = [
+  {
+    id:'liujian', n:'刘坚', t:'经济观察报社社长、总编辑（采编板块最高负责人）',
+    brief:'采编板块最高负责人。2026-10-08 终版资料标题明确标注「即将退休」；新任社长人选未在本期终版资料中披露。',
+    gender:'男', birth:'1966年9月', origin:'浙江绍兴',
+    edu:'武汉大学新闻系本科（1984.6–1988.6）；中欧国际工商学院管理学硕士',
+    party:'-', identity:'处级干部；康佳集团股份有限公司独立董事；曾任海信视像科技股份有限公司、方正科技集团股份有限公司独立董事；北京经观文化传媒有限公司董事长；山东经济观察报传媒有限公司董事、总经理',
+    career:'1984年6月-1988年6月，武汉大学新闻系学习。1988年8月-1991年，对外经济贸易大学任教。1991年-2001年4月，《中华工商时报》任编委、新闻中心副主任。2001年4月加入《经济观察报》，约2005年底-2006年初起任总编辑，2006年11月接任社长至今。作为报社采编体系最高负责人，统筹全社内容方向、采编管理、媒体融合转型与战略发展；长期秉持「理性、建设性」办报理念，推动经观从单一纸报向全媒体平台演进，全网累计粉丝超3500万。同时担任多家上市公司独立董事，深耕公司治理、资本市场与财经媒体领域。',
+    award:'-', works:'-', hobbies:'酷爱阅读，常年研读经济社科、商业史、中外经典文学与海外财经深度报道；偏好观看文艺影片、实地走访产业一线，习惯以文字记录个人观察思考；常与学界、商界资深人士线下交流读书与行业感悟，偏爱安静思辨类人文活动。'
+  },
+  {
+    id:'wenzhao', n:'文钊', t:'执行总编辑、宏观经济研究院院长（总编辑日常副手）',
+    brief:'采编条线核心，分管宏观经济研究院与重点深度报道。刘坚一手培养的采编二号负责人。',
+    gender:'男', birth:'-', origin:'-',
+    edu:'1992年毕业于兰州大学新闻与传播学院；中欧国际工商学院EMBA 2012级；曾获财经奖学金、路透奖学金',
+    party:'-', identity:'1. 经济观察报社委会成员、宏观经济研究院院长；2. 广州悦尔公益基金会专家委员会委员；3. 宏观经济论坛主理人，长期对接北大国家发展研究院等学术机构；4. 中欧国际工商学院校友文创协会成员，财经书单推荐人',
+    career:'1992年-1997年1月，甘肃省化工进出口公司任秘书、外销员。1997年1月-2000年4月，兰州晨报社经济新闻部记者。2000年6月加入《中华工商时报》，任总编室要闻版编辑、记者。之后加入《经济观察报》，先后担任宏观经济部主任、要闻部主任、总编室主任、总编辑助理、副总编辑。2016年至今任执行总编辑、社委会成员，兼宏观经济研究院院长。深耕财经新闻、社会新闻领域，组织策划并撰写了一系列重量级新闻报道、评论和社论。\n刘坚 2006 年任总编辑后，逐步提拔文钊从部门主任、总编助理、副总编辑到 2016 年执行总编辑，是刘坚一手培养的采编二号负责人。',
+    works:'长期在经济观察报、官网刊发社论、万字宏观深度评论、学者专访（代表作品《我们的四分之一世纪》《论争中的张维迎》《写在创刊二十周年》）；中欧商学院发布《企业家精神》系列专题评论；无独立出版专著；常年为书店、商学院推荐经济、社科、商业类书单',
+    hobbies:'酷爱深度阅读，常年研读经济理论、商业史、中外史学与海外财经经典，持续发布年度个人书单；长期保持文字随笔写作习惯；闲暇偏好实地走访产业一线，与经济学家、企业家线下交流思辨；闲暇观看人文纪实影片，持续参与可持续发展公益研讨与学术沙龙。'
+  },
+  {
+    id:'guohongchao', n:'郭宏超', t:'副总编辑、经观传媒高级副总裁、董事',
+    brief:'分管全媒体总编辑条线与经观传媒内容经营。双线兼任：采编侧分管金融/资管/银发/品牌产业报道、新媒体内容转型；经营侧操盘蓝筹地产年会、美好生活高峰论坛、VTime新媒体盛典等重磅IP。',
+    gender:'男', birth:'1978年10月', origin:'安徽',
+    edu:'兰州大学1997级新闻系本科',
+    party:'-', identity:'1. 中国经济传媒协会会员；2. 兰州大学新闻与传播学院校外行业导师、兰大北京校友会核心校友；3. 银发产业创新研究院联合发起人；4. 中国国际广告节互动广告高峰论坛常年主讲嘉宾；5. 财经新媒体、品牌营销、养老产业行业论坛常驻演讲人',
+    career:'1997年-2001年，兰州大学新闻系学习。毕业后进入北京证券类报纸《信息早报》工作。2002年正式入职《经济观察报》，初期担任金融市场新闻部记者，逐步升任金融板块部门主任、全媒体总编辑。现任三重核心职务：①经济观察报社副总编辑（采编线，分管金融、资管、养老银发、品牌产业报道、新媒体内容转型）；②经观传媒副总裁（经营线最高负责人之一，统筹商业化 IP、全国行业峰会、品牌传播、地方分社协同；双重任职：北京经观文化传媒有限公司高级副总裁、董事）；③《现代广告》杂志总编辑，全面负责广告营销行业期刊运营。\n业务权责：采编端统筹金融、银发经济、新媒体深度可视化内容建设，主导短视频、APP 全媒体矩阵升级；经营端操盘蓝筹地产年会、美好生活高峰论坛、VTime 新媒体盛典、互动广告高峰论坛、杰出品牌营销年会等重磅 IP；牵头银发产业智库、校企人才合作、高校传媒讲座；兼顾采编内容与商业化活动双线协同，日常与执行总编辑文钊搭档统筹对外大型行业活动。',
+    works:'独立/联合出版行业专著：《2015-2017 新金融案例年度报告》《嬗变与挑战 FinTech2017—2018 年度报告》《未来金融的样子》《智能营销传播理论新思》《爆款营销》；联合编撰《营销：2017-2018 年度杰出品牌营销案例精选》',
+    hobbies:'-'
+  },
+  {
+    id:'zouweiguo', n:'邹卫国', t:'副总编辑、管理与创新案例研究院院长（兼大消费新闻部分管）',
+    brief:'分管评论、产业消费报道、商业案例智库与内容端行业峰会对外发言。公众号「底层设计师」主理人，A股自由现金流创造力榜单项目负责人。',
+    gender:'男', birth:'-', origin:'-',
+    edu:'公开渠道未披露完整学历院校信息；长期深耕公司治理、企业商业模式、价值投资、上市公司财务分析领域研究',
+    party:'-', identity:'管理与创新案例研究院院长；公众号「底层设计师」主理人；A股自由现金流创造力榜单项目负责人；国内各大商业论坛、上市公司治理峰会常驻演讲嘉宾',
+    career:'加入经济观察报后，逐步升任副总编辑，分管产业/公司报道线。聚焦中国商业领域的公共问题，以“价值”度量，以内部控制的“底层设计”思想观照商业发展。2022年至今，持续以副总编辑身份代表报社主办消费、产业类行业论坛，包括美好生活高峰论坛、内容创作者论坛等，主导管理与创新案例研究院的研究工作，推出A股上市公司自由现金流量创造力榜单等研究成果。\n持续代表报社主办、参与美好生活高峰论坛、企业创新论坛、内容创作者论坛、上市公司价值研讨会等行业活动；统筹企业案例访谈、企业家深度对话项目。',
+    works:'《经济数据的陷阱》、《复盘中民投》、《宁德时代：写在万亿市值门槛边上》等重磅深度商业案例文章',
+    hobbies:'-'
+  },
+  {
+    id:'wangyongjing', n:'王咏静', t:'经观传媒董事长、总裁、《现代广告》杂志出品人（经营体系最高负责人）',
+    brief:'经观传媒最高负责人，统筹经营与全媒体商业化条线。经营线一把手，与采编体系刘坚、文钊分线管理。',
+    gender:'女', birth:'1977年', origin:'-',
+    edu:'北京大学光华管理学院 EMBA 校友；财经传媒、品牌营销领域深耕23年，系统深耕媒体商业化、品牌传播、女性经济、公益心理赛道',
+    party:'-', identity:'1. 北京经观文化传媒有限公司董事长、法定代表人；2.《现代广告》杂志出品人；3. 女性影响力联盟发起人、「绽放的力量」女性论坛组委会主席；4. 戛纳幼狮中国区选拔赛主办负责人；5.「心阶讲堂」青少年心理健康成长项目发起人；6. 智慧社区数字化联盟发起牵头人；7. 中国广告协会行业活动常驻致辞嘉宾、公益广告黄河奖颁奖嘉宾；8. 多家产业投资企业控股股东、最终受益人',
+    career:'2003年加入经观体系，2015年时任经济观察报社副社长，主导医疗健康产业媒体协同工作。2015年至今逐步升任经观传媒总裁，统筹报社商业化运营、《现代广告》杂志、新媒体业务。2021年后出任经观传媒董事长、法定代表人，统筹全部经营体系。核心权责（经营线一把手，与采编体系刘坚、文钊分线管理）：\n1. 全盘负责经观传媒商业化运营，管理大消费事业部、综合产业事业部、新媒体整合传播中心、广告营销中心、智库调研中心；杜惠（大消费事业部总经理）直接向其汇报；\n2. 全权运营《现代广告》杂志，独家承办戛纳幼狮中国区选拔、中国国际广告节系列高峰论坛；\n3. 打造IP矩阵：美好生活高峰论坛、蓝筹地产年会、VTime新媒体盛典、营响大会、女性影响力论坛、心阶讲堂；\n4. 发起行业联盟：智慧社区数字化联盟、女性影响力联盟，联动房企、消费品牌、广告行业、公益机构；\n5. 布局产业投资，控股多家信息技术、健康科技企业，拓展媒体+产业融合业务；\n6. 统筹全媒体商业化转型，搭建广告、品牌咨询、行业峰会、白皮书、线下研学多元营收体系，与采编团队（郭宏超、陈哲、邹卫国等）协同落地产业专题活动。',
+    works:'-',
+    hobbies:'-'
+  },
+  {
+    id:'duhui', n:'杜惠', t:'经观传媒高级副总裁、大消费事业部总经理、新媒体整合传播中心负责人',
+    brief:'经营线高管，直管大消费事业部，对应采编线大消费新闻一部、二部业务协同，汇报上级为王咏静。',
+    gender:'女', birth:'-', origin:'-',
+    edu:'未完整公开，财经媒体资深从业者，深耕传媒行业超17年',
+    party:'-', identity:'1. 长期统筹《经济观察报》美好生活高峰论坛、VTime新媒体盛典、内容创作者大会等行业顶级论坛组委会负责人；2. 持续主导《美好生活白皮书》系列行业研究项目负责人；3. 消费赛道品牌传播、财经新媒体商业化论坛常驻演讲嘉宾',
+    career:'早期任职经济观察报新媒体中心总经理，后任整合传播中心总经理；逐步升任大消费事业部总经理，现任经观传媒副总裁，统筹大消费全板块经营业务。核心权责：负责消费行业客户营销、品牌活动、行业峰会、白皮书IP、消费产业商业化运营，统筹美好生活高峰论坛、VTime新媒体盛典、内容创作者大会等重磅IP活动，连续多年主导《年度美好生活白皮书》项目发布。',
+    works:'无独立出版专著；牵头持续发布历年《美好生活白皮书》行业报告系列',
+    hobbies:'-'
+  },
+  {
+    id:'jiangxiaoxue', n:'蒋晓雪', t:'时尚与文旅部总经理、《现代广告》杂志社总经理（兼任）',
+    brief:'经营板块高管（经观传媒经营侧）：时尚与文旅部总经理，兼任《现代广告》杂志社总经理。260908 PPT「现任领导·经营端」列名；详细个人档案未在本期终版资料中披露。',
+    gender:'-', birth:'-', origin:'-', edu:'-', party:'-',
+    identity:'《现代广告》杂志社总经理（兼任）',
+    career:'现任经济观察报社时尚与文旅部总经理，兼任《现代广告》杂志社总经理。',
+    works:'-', hobbies:'-'
+  },
+  {
+    hist:true, id:'chenzhe', n:'陈哲', t:'经济观察报副总编辑（历史高管）',
+    brief:'采编分管板块：房地产/不动产、大健康、文旅生活方式、城市更新四大垂直赛道。全权操盘蓝筹地产年会、美好空间盛典两大行业IP。',
+    gender:'男', birth:'-', origin:'-',
+    edu:'-',
+    party:'-', identity:'1. 中国地产经理人评选京津冀区域评审；2.「蓝筹地产年会」「美好空间盛典」常年主理人、致辞嘉宾；3. 经观少年商学院负责人，青少年财商教育项目牵头人；4. 数字创新论坛、受尊敬企业年会常驻主持与演讲嘉宾；5. 城市更新、建筑人居、康养产业行业观察研究者',
+    career:'2008年前后入职《经济观察报》，早期深度覆盖地方经济、县域集体经济、上海国资国企改革；2010年起专职负责房地产行业报道，全程跟踪外滩地王之争、绿城融创股权争夺、宝万之争等行业标志性商战，多次独家专访郭广昌、宋卫平、孙宏斌等房企核心企业家。逐步晋升报社副总编辑。核心权责：统筹不动产报道全条线（田国宝等地产核心记者直接汇报）；全权操盘蓝筹地产年会、美好空间盛典两大行业IP；运营经观少年商学院财商研学项目；主持数字经济、企业人文价值主题论坛；参与全社重大稿件、行业专题评审，配合刘坚、文钊统筹产业类内容策划；日常与郭宏超协同落地地产、消费类商业化行业峰会。',
+    works:'代表文章《商战的时代底色》《回到房地产的第一性原理》《为群众好的政策，群众怎么不领情》《在时代中保有主张丨AI时代的人类意见》；无独立出版专著。',
+    hobbies:'-'
+  },
+  {
+    id:'zhangyong', hist:true, n:'张勇', t:'原经济观察报华东分社社长（2004–2025.12）',
+    brief:'2025-12-16 离任经观采编体系，任 *ST 宇顺副总经理。深耕华东资本市场、上市公司财经报道。 2026-10-08 终版历史高管档案确认其任职时段为 2004–2025.12，2025年12月正式离开经观采编体系，12月16日 *ST 宇顺董事会聘任其为副总经理。',
+    gender:'男', birth:'1978年9月15日', origin:'江西省新余市渝水区',
+    edu:'本科学历（具体院校未公开）', party:'中共党员',
+    identity:'北京经观文化传媒有限公司董事；长期深耕华东资本市场、上市公司财经报道，多次担任上海金融峰会对话主持人、圆桌嘉宾',
+    career:'早期任职江西省国际信托有限公司证券部分析师，具备资本市场、证券行业专业从业背景；2004 年正式入职《经济观察报》，历任华东新闻中心高级记者、华东新闻中心主任，后升任报社编委、华东分社社长，全权负责上海、华东区域采编团队管理、上市公司/资本市场深度报道统筹，常年主办上海区域金融产业峰会、企业对话活动；任职经观期间长期聚焦 A 股游资、券商、上市公司、区域城投产业报道；2025年12月正式离开经济观察报采编体系，2025年12月16日 *ST宇顺董事会聘任为公司副总经理（任期至第六届董事会届满），已于2025年底离任。',
+    works:'《已消失的涨停板敢死队》等多篇资本市场深度调查报道，无独立出版专著',
+    hobbies:'-'
+  },
+  {
+    id:'heli', hist:true, n:'何力', t:'《经济观察报》创始人、首任总编辑、社长（2001.1–2006.6）',
+    brief:'经观初代核心创始人，"三驾马车"之一。离任后历任阳光媒体新媒体总裁、《第一财经周刊》总编辑、《财经》主编、《全球商业经典》总编辑、界面新闻 CEO。 2026-10-08 终版历史高管档案确认其为创社期总编辑、社长（2001–2006）。',
+    gender:'男', birth:'1962年8月', origin:'北京',
+    edu:'首都师范大学化学系本科', party:'中共党员',
+    identity:'界面（上海）网络科技有限公司董事、界面新闻联合创始人；资深财经媒体人；多家财经论坛特邀演讲嘉宾',
+    career:'1984–1989 年先后任教于北方交通大学、首都师范大学；1989 年进入《中华工商时报》，历任记者/编辑/总编室主任/总编辑助理；2000 年牵头筹备创办《经济观察报》，2001.1 起任总编辑、社长；2006.11 任阳光媒体投资集团新媒体业务总裁；2007.9 创办《第一财经周刊》并任总编辑；2009.12 任《财经》杂志主编；2011 年初出任《全球商业经典》杂志总编辑；2014 年牵头创立界面新闻并任 CEO；界面与财联社合并后持续担任界面公司董事，活跃于财经媒体行业交流、行业论坛、媒体行业访谈对话。',
+    works:'主编《决胜营销：2004~2005 年度中国杰出营销奖案例精选》',
+    hobbies:'-'
+  },
+  {
+    id:'zhanghong', hist:true, n:'张宏', t:'《经济观察报》前副总编辑（2010.3 被免职）',
+    brief:'因 2010 年 3 月户籍制度改革共同社论事件被免去经济观察网副总编辑职务，离开经观体系。 2026-10-08 终版历史高管档案确认其 2010 年 3 月因户籍制度改革社论事件被免职。',
+    gender:'男', birth:'1974 年', origin:'福建',
+    edu:'武汉大学德语系', party:'-', identity:'-',
+    career:'1998 年加入路透社北京记者站；2002 年 3 月在北京晨报工作；而后加入经济观察报，任经济观察网副总编辑，主要报道领域为保险行业。2010 年 3 月因相关社论事件被免去经济观察网副总编辑职务，离开经济观察报体系。2010 年后暂无权威公开渠道披露其稳定正式任职信息，截至 2026 年 7 月，无可靠可证实的最新官方职业身份记录。',
+    award:'2010 年 3 月 1 日，中国各地 13 家报纸罕见地发表题为《提请两会代表委员敦促加速户籍改革》的共同社论。这篇由《经济观察报》和其他 12 家地方性或区域性报纸共同发表的社论指出，户籍制度是违宪的、是对农村居民的歧视，呼吁人大代表和政协委员加快户籍制度的改革。不久，社论的作者之一张宏被解除《经济观察网》副总编辑的职位；《经济观察报》的高级编辑们也受到了中宣部的严重警告。',
+    works:'-', hobbies:'-'
+  },
+  {
+    id:'yuwei', hist:true, n:'于威', t:'原《经济观察报》总编室主任 / 总编辑助理（2001–2005）',
+    brief:'经观"观察家"版组主创者；后任现代传播集团《生活》总编辑、搜狐内容总编辑、搜狐媒体副总裁；现为北京单向街文化有限公司 CEO（许知远合伙人）。 2026-10-08 终版将其列入历史高管序列。',
+    gender:'女', birth:'-', origin:'-',
+    edu:'山东大学中文系、北京大学中文系研究生', party:'-', identity:'北京单向街文化有限公司首席执行官',
+    career:'1999 年任艺龙网新闻/生活/读书频道主编；2001–2005 加入《经济观察报》任总编室主任，先后负责评论部、要闻部，2004 年任总编辑助理；主创并领导"观察家"版组，为《经济观察报》提供了具有鲜明风格的内容和独特的影响力；2005 年加入现代传播集团，参与创办《生活》并任总编辑，兼任《东方企业家》执行主编；2007.2.5 出任搜狐内容总编辑；2010.1.31–2011.12.9 晋升搜狐媒体副总裁，全面负责和领导搜狐文字内容的建设、规划和管理，因"与家人团聚的个人原因"离职；现为北京单向街文化有限公司首席执行官，许知远的合伙人。',
+    award:'获得过 IJP（国际记者项目）奖学金；2008 年北京奥运火炬手。',
+    works:'-', hobbies:'-'
+  },
+  {
+    id:'zhaoli', hist:true, n:'赵力', t:'《经济观察报》创始人之一、首任社长（2000.12–2008）',
+    brief:'经观"三驾马车"之一（与何力、张忠并称）。主导报纸早期整体运营。 2026-10-08 终版历史高管档案确认其为创社期社长（2001–2006 初）。',
+    gender:'男', birth:'1971 年', origin:'-',
+    edu:'中国外交学院、德国柏林自由大学', party:'-',
+    identity:'经观"三驾马车"之一；山东经济观察报报业有限公司董事兼总经理；北京博集文化传播有限公司、北京思维视觉传媒科技有限公司等法定代表人、高管',
+    career:'1993–2000 年在《中国经营报》任记者/编辑/新闻版主编/财经版主编，《中国企业家杂志》总编辑助理；2000.12–2008 年任《经济观察报》社委会委员、社长；2008.5 创立《投资者报》并任总编辑；2009.11 任《财经》杂志副总编辑；2010.8 任《投资者报》总编辑；后续担任多家传媒企业高管，布局财经内容、品牌传播相关业务；截至 2026 年 7 月，担任山东经济观察报报业有限公司董事兼总经理。',
+    works:'-', hobbies:'-'
+  },
+  {
+    id:'zhangzhong', hist:true, n:'张忠', t:'《经济观察报》创始合伙人、前总经理、副社长',
+    brief:'经观"三驾马车"之一，《传媒中国》"影响中国传媒 30 人"（2002）。早期市场化运营核心推动者。 2026-10-08 终版历史高管档案确认其为创始合伙人、前总经理。',
+    gender:'男', birth:'1967 年（2003 公开信息推算）', origin:'-',
+    edu:'安徽师范大学政治系', party:'-',
+    identity:'经观"三驾马车"之一；2002 年《传媒中国》"影响中国传媒 30 人"之一',
+    career:'早年供职《中国经营报》，为管理团队核心成员之一；2001 年参与创办《经济观察报》，历任总经理、副社长，全面负责报社运营管理，是经观早期市场化运营的核心推动者；离开经观后，与清华大学合作创办《经济观察报》华商名人堂，持续开展商业领袖访谈与行业交流活动；后续转型商业咨询、品牌智库领域，持续深耕财经圈层企业家资源对接、商业论坛运营；截至 2026 年 7 月，无公开信息显示其在主流媒体担任全职高管岗位。',
+    award:'从事新闻传播工作期间，作品多次获得国家各类新闻奖；2002 年入选《传媒中国》"影响中国传媒 30 人"榜单。',
+    works:'-', hobbies:'-'
+  },
+];
+
+/* 历史沿革 */
+let HISTORY = [
+  {y:'2001 年 4 月', e:'《经济观察报》2001年4月16日正式创刊，标志性橙色新闻纸面世，秉持"理性、建设性"办刊理念；陆续在华东、华南、华西、湖北设立记者站。创刊初期推出《"证监会"系掌下的券商们》深度报道，引发行业广泛关注。'},
+  {y:'2003–2004', e:'联合北京大学管理案例研究中心主办「中国最受尊敬企业评选颁奖典礼」，举办"转型年代的商业精神"高层论坛；举办"2004・中国新视角"年度高峰论坛，迅速确立国内主流财经媒体地位。'},
+  {y:'2006', e:'创始人何力 2006年6月离任报社社长、总编辑；同年11月出任阳光媒体投资集团新媒体业务总裁。'},
+  {y:'2007–2008', e:'《经济观察报》入围第四届中国传媒创新年会 "十大传媒专业品牌"；持续深耕上市公司、宏观经济产业报道，稳步拓展全国采编网络。'},
+  {y:'2009', e:'2009年12月7日，《经济观察报》成为仅有的两家中国报纸之一，与全球其他55家报纸发表共同社论，呼吁聚集在哥本哈根参加联合国气候变化峰会的世界领导人采取行动。'},
+  {y:'2010', e:'2010年3月发表社论呼吁中国立法机关代表对户籍制度进行改革，社论由《卫报》酝酿、13家中国报纸共同发表。《纽约时报》称，编辑张宏因在发表社论中的作用而被免职。'},
+  {y:'2011', e:'2011年7月30日，无视政府审查指令，发表8版温州动车追尾事故专题报道。头版是一封写给2岁幸存者的信，描述"一个在人民中间开花，另一个隐藏在官场中"的中国两个形象。'},
+  {y:'2012', e:'因发布不实报道（称铁道部可能改革）被罚款并警告，当局吊销了写这篇报道记者的记者证。'},
+  {y:'2013–2016', e:'全面推进媒体融合，经济观察网持续扩容，搭建新媒体矩阵；陆续启动VTime新媒体盛典、中国最受尊敬企业年会等品牌IP活动。'},
+  {y:'2017–2020', e:'成立多个行业研究院（宏观经济研究院、城市与政府事务研究院、管理与创新案例研究院等）；持续发布金融、消费、产业系列行业白皮书；搭建经观传媒商业化运营平台。'},
+  {y:'2021.4.28', e:'重大架构变更：主管主办单位由山东三联集团正式调整为济南日报报业集团。'},
+  {y:'2022–2024', e:'持续打造「美好生活高峰论坛」「内容创作者大会」行业IP；深度调查报道、产业专题持续产出，李微敖、种昂等团队推出多篇全国重磅法治、资本市场调查稿件；文钊出任执行总编辑，完善采编高层管理架构。'},
+  {y:'2025–2026', e:'持续推进融媒体转型，强化短视频、直播、智库研究业务；完善大消费、财税金融、科创、不动产、国际新闻等垂直采编中心；经观传媒持续拓展财经公关、行业峰会、品牌咨询商业化业务。'},
+  {y:'2026 年 8 月', e:'2026-09-08 终版资料标注：刘坚（经济观察报社长、总编辑）「马上要退」；新任社长人选未在本期终版资料中披露。', tbd:false},
+];
+
+/* 更新记录 */
+let CHANGELOG = [
+  {date:'2026-10-12', src:'doc', body:'《经济观察报媒体地图》2026-10-08 版 PPT（26 页，2026-10-08 制）增量并入：① 领导层职务按终版校准——郭宏超由「社委、副总编辑、全媒体总编辑、经观传媒副总裁」改为「副总编辑、经观传媒高级副总裁、董事」；杜惠补「高级副总裁」并加「新媒体整合传播中心负责人」；王咏静补「《现代广告》杂志出品人」；文钊去「社委」并补宏观/评论/峰会分管；② 刘坚终版标题明确「即将退休」（此前表述为「马上要退」），career 中总编辑/社长接任时点按终版订正为「约2005年底-2006年初任总编辑、2006年11月接任社长」，并补 award 字段；③ **历史高管按「覆盖不新建」原则补强**：张勇、何力、张宏、于威、赵力、张忠 6 位在 09-08 版已建档且信息更详尽（出生年、教育背景、完整履历、获奖），本版**不新建第二份档案**，仅在各自 brief 末尾追加 2026-10-08 终版确认语（张勇任职至 2025.12、何力创社期总编社长、张宏 2010 被免职等），实现信息覆盖；④ 部门层按终版订正与补人——蔡越坤由「编委、金融机构部主任」改为「资深记者（债券、信托、银行条线）」，资本市场部不再单列；品牌活动部负责人由于子钧改为张瑾；广告营销中心补周继平为负责人（驻广州）；全媒体条线补栗新（摄制部总监）与总编室（终版未披露姓名，中性标注）；地方新闻中心「周曾军」按终版订正为「周增军」；大消费事业部补高杉为执行岗、综合产业事业部负责人改为中性标注；⑤ 补入组织树节点李微敖（深度调查部首席记者）、种昂（山东新闻中心主任）、胡群（金融市场研究院院长）；⑥ 历史沿革与机构简介按终版核对一致（刘坚接任时点、2012年处理名单、2021年主管主办单位变更）。本次未新增任何占位表述，未披露项一律中性标注。', fields:['领导简介','部门架构','历史高管','组织树','历史沿革']},
+  {date:'2026-09-10', src:'doc', body:'领导简介区对齐 260908 PPT「核心高管介绍 / 历史高管介绍 / 现任领导」逐人穷尽：① 新增「奖惩」字段与渲染（张宏 2010 户籍改革共同社论事件全文、于威 IJP 奖学金·奥运火炬手、张忠 国家新闻奖·影响中国传媒30人）；② 档案卡片改为按素材实际字段呈现，无信息板块不再以"-"占位显示；③ 新增蒋晓雪（现任领导·经营端列名，时尚与文旅部总经理兼《现代广告》杂志社总经理）；④ 履历补全：刘坚"理性建设性"理念与独董深耕、文钊刘坚提拔脉络、郭宏超三重职务括注+完整业务权责、邹卫国论坛统筹与企业案例访谈、王咏静 6 项核心权责全文、张勇 *ST宇顺聘任及任期、何力 2011《全球商业经典》、张宏/张忠/赵力 2026年7月在岗状态；⑤ 张勇/何力/王咏静 社会身份与教育背景细节还原。', fields:['领导简介']},
+  {date:'2026-09-08', src:'doc', body:'《260908 经济观察报档案》PPT 全量更新（数据更新 2026-09-08，27 页）：① 编委层 7 人完整对齐——刘坚/文钊/郭宏超/邹卫国/袁金秋/张雅楠/宋笛；② 部门负责人纠错 6 处——城市与不动产主任 阿茹汗→张雅楠、TMT 主任 张英→任晓宁、大健康主任 洪小棠→张英、大消费分管 张雅楠→邹卫国、汽车与出行 陈月芹→高飞昌、财税与环保 杜涛→政策新闻与研究部主任；③ 经营板块新增 4 部门——大消费事业部(杜惠+祝丽佳+罗雯)、综合产业事业部(高杉+秦峰)、广告营销中心(陈曦+林楠+顾佳)、新媒体整合传播中心(杜惠兼)；④ 研究院/媒体运营/金融市场/政策与产业/产经/大消费/国际/评论等各部门成员名单全量补全；⑤ 陈哲转历史高管、刘坚状态清洗。', fields:['编委层','部门负责人','经营架构','人员名单']},
+  {date:'2026-09-04', src:'doc', body:'《9893750d 经济观察报媒体地图 25 页》PPT 增量入库：新增 4 个部门（地方新闻中心 / 评论频道 / 观察家书评 / 时尚与文旅部）+ 1 个经营事业部（品牌活动部）；补录 6 位历史高管档案（张勇、何力、张宏、于威、赵力、张忠）。数据来源：pptx slide 3–25。', fields:['组织架构','历史高管','经营事业部']},
+  {date:'2026-09-01', src:'doc', body:'《260817 经济观察报档案》PPT 全量导入：补全 23 个媒体产品（含 logo）、7 位核心高管完整履历、历史沿革大事记。', fields:['媒体产品','领导简介','历史沿革']},
+  {date:'2026-08-27', src:'chat', body:'客户反馈并经 PPT 同源确认：社长刘坚即将退休；新任社长人选未在 9-04 终版文件中披露。本项信息缺口已在站内 PERSON_TREES/LEADERS/HISTORY 三处以「未在 9-04 终版文件中披露」呈现。', fields:['决策层']},
+  {date:'2026-08-17', src:'doc', body:'《经济观察报档案 final 0825》导入：重建决策层 / 社委 / 编委 / 部门主任四级架构，补全 5 位核心高管简介与历史沿革。', fields:['组织架构','领导简介','历史沿革']},
+  {date:'2026-08-07', src:'doc', body:'组织构架 xlsx 数据核对入库（19 行人员表对齐）。', fields:['组织架构','部门主任层']},
+  {date:'2026-08-05', src:'doc', body:'《经济观察报·批改版》反馈合并：修正中层架构与分管关系。', fields:['组织架构']},
+];
+
+
+/* ===== 权威数据覆盖：优先读飞书登记底表导出的快照（维稳核心）=====
+   若 window.AUTHORITATIVE_DATA 存在，用它覆盖内嵌数据；否则保留内嵌数据作兜底。
+   重新生成：python output/media_hub/assets/registry_export.py */
+(function(){
+  if(typeof AUTHORITATIVE_DATA==='undefined') return;
+  const M = AUTHORITATIVE_DATA.media && AUTHORITATIVE_DATA.media['eobserver'];
+  if(!M) return;
+  if(M.PERSON_TREES && M.PERSON_TREES.length) PERSON_TREES = M.PERSON_TREES;
+  if(M.DEPTS && M.DEPTS.length) DEPTS = M.DEPTS;
+  if(M.PRODUCTS && M.PRODUCTS.length) PRODUCTS = M.PRODUCTS;
+  if(M.LEADERS && M.LEADERS.length) LEADERS = M.LEADERS;
+  if(M.HISTORY && M.HISTORY.length) HISTORY = M.HISTORY;
+  window._AUTH_SOURCE = AUTHORITATIVE_DATA.generated_at;
+})();
+/* ===== 权威数据覆盖结束 ===== */
+
+/* ============================================================
+   展示层
+   ============================================================ */
+const esc = s => String(s).replace(/</g,'&lt;');
+
+/* ---- 人事线渲染（纵向缩进树） ---- */
+function pNode(nd, isRoot){
+  const kids = (nd.ch && nd.ch.length) ? nd.ch : null;
+  const lv = nd.lv ? `<span class="lv ${nd.lv}">${nd.lv==='DP'?'机构':nd.lv}</span>` : '';
+  const mk = nd.mark ? `<span class="mark">${esc(nd.mark)}</span>` : '';
+  const head = kids
+    ? `<span class="toggle" onclick="var n=this.closest('.node');n.classList.toggle('closed')"><span class="caret">▼</span></span>`
+    : `<span style="display:inline-block;width:14px"></span>`;
+  const card = nd.dept
+    ? `<span class="depttag">${esc(nd.n)}</span><span style="font-size:10.5px;color:var(--sub)">${esc(nd.t||'')}</span>`
+    : `<div class="pcard" data-k="${esc(nd.n+nd.t+(nd.note||''))}">
+         <div class="pname">${head}${esc(nd.n)}${lv}${mk}</div>
+         <div class="ptitle">${esc(nd.t)}</div>
+         ${nd.note?`<div class="pextra">${esc(nd.note)}</div>`:''}
+       </div>`;
+  const kidsHtml = kids
+    ? `<div class="kids">${nd.ch.map(c=>pNode(c,false)).join('')}</div>` : '';
+  return `<div class="node ${isRoot?'root':''}"><div class="row">${card}</div>${kidsHtml}</div>`;
+}
+document.getElementById('personTree').innerHTML =
+  PERSON_TREES.map(tr=>
+    `<div class="dgroup" style="margin-top:2px">${esc(tr.title)}</div>
+     <div class="ptree" style="margin-bottom:6px">${pNode(tr.root,true)}</div>`
+  ).join('');
+
+/* ---- 部门线渲染 ---- */
+function renderDeptGrid(){
+  const box = document.getElementById('deptGrid');
+  const groups = [...new Set(DEPTS.map(d=>d.g))];
+  box.innerHTML = groups.map(g=>{
+    const ds = DEPTS.filter(d=>d.g===g);
+    return `<div class="dgroup">${esc(g)}<span style="font-weight:400;color:var(--sub);font-size:11px">${ds.length} 个</span></div>
+      <div class="dgrid">${ds.map(d=>`
+        <div class="dcard" data-id="${d.id}" onclick="openDept('${d.id}')">
+          <span class="dnum">${ds.indexOf(d)+1}</span>
+          <h4>${esc(d.name)}<span class="dtype">${esc(d.type)}</span></h4>
+          <div class="dhead">负责人：${esc(d.head.n)} · ${esc(d.head.t)}</div>
+          <div class="dchain">分管链：${d.sup ? esc('刘坚 → '+d.sup+' → '+d.name) : esc('刘坚 → 直属 · '+d.name)}</div>
+          ${ (d.members && d.members.length) ? `<div class="mmbr"><b>班子成员（${d.members.length} 人）</b>：${d.members.map(m=>`<span class="mtag">${esc(m.n)}</span>`).join('')}</div>` : '' }
+          <div class="dchain">${esc(d.desc)}</div>
+        </div>`).join('')}</div>`;
+  }).join('');
+}
+
+/* 部门完整人事图：居中树状图（.chart/.cnode，与经济观察报同款） */
+function cNode(node, isTrunk, isDept){
+  const cls = isTrunk ? 'cnode trunk' : (isDept ? 'cnode dept' : 'cnode');
+  const lv = node.lv ? `<span class="lv ${node.lv}">${node.lv==='DP'?'机构':node.lv}</span>` : '';
+  const mk = node.mark ? `<span class="mark">${esc(node.mark)}</span>` : '';
+  const xl = node.note ? `<div class="cxl">${esc(node.note)}</div>` : '';
+  let h = `<div class="${cls}"><div class="cn">${lv}${esc(node.n)}${mk}</div><div class="ct">${esc(node.t)}</div>${xl}</div>`;
+  if (node.ch && node.ch.length) {
+    h += '<ul>';
+    for (const child of node.ch) {
+      const childIsDept = !child.ch || !child.ch.length;
+      h += `<li>${cNode(child, false, childIsDept)}</li>`;
+    }
+    h += '</ul>';
+  }
+  return h;
+}
+
+function openDept(id){
+  document.querySelectorAll('.dcard').forEach(c=>c.classList.toggle('sel', c.dataset.id===id));
+  const d = DEPTS.find(x=>x.id===id);
+  const isJY = d.g.startsWith('经营');
+  const rootName  = isJY ? '王咏静' : '刘坚';
+  document.getElementById('ddName').textContent = d.name + ' · 完整人事树状图';
+  document.getElementById('ddNote').innerHTML =
+    `板块：<b>${esc(d.g)}</b> · 分管链：<b>${d.sup ? esc(rootName+' → '+d.sup+' → '+d.name) : esc(rootName+' → 直属 · '+d.name)}</b> · ${esc(d.desc)}`;
+  /* 构建树：root(负责人,trunk) → 中间层(dept:班子成员/各条线) → 叶子(人员) */
+  const kids = [];
+  if (d.members && d.members.length) {
+    kids.push({n:'班子成员', t:d.members.length+' 人', lv:'DP', ch:d.members.map(m=>({n:m.n, t:m.t, lv:m.lv, note:m.note}))});
+  }
+  if (d.lines && d.lines.length) {
+    for (const l of d.lines) {
+      kids.push({
+        n: l.name,
+        t: l.t || ((l.people && l.people.length) ? (l.people.length+' 人') : ''),
+        lv:'DP',
+        ch: (l.people && l.people.length) ? l.people.map(p=>({n:p.n, t:p.t})) : null,
+        note: (!l.people || !l.people.length) ? (l.desc||'PPT 未列具体名单') : ''
+      });
+    }
+  }
+  const root = {n: d.head.n, t: d.head.t, lv: d.head.lv, ch: kids};
+  document.getElementById('ddChart').innerHTML = cNode(root, true, false);
+  document.getElementById('deptDetail').classList.add('on');
+  document.getElementById('deptDetail').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function closeDept(){
+  document.getElementById('deptDetail').classList.remove('on');
+  document.querySelectorAll('.dcard').forEach(c=>c.classList.remove('sel'));
+}
+renderDeptGrid();
+
+/* ---- 双轨页签 ---- */
+document.querySelectorAll('.otab').forEach(t=>{
+  t.onclick = ()=>{
+    document.querySelectorAll('.otab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+    document.getElementById('pane-'+t.dataset.v).classList.add('on');
+  };
+});
+
+/* ---- 左侧导航滚动联动 ---- */
+const secs = [...document.querySelectorAll('main section')];
+const links = [...document.querySelectorAll('.side a')];
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle('on', l.getAttribute('href')==='#'+e.target.id));
+    }
+  });
+},{rootMargin:'-30% 0px -60% 0px'});
+secs.forEach(s=>io.observe(s));
+
+/* ---- 媒体产品渲染 ---- */
+function renderProducts(){
+  const cats = [...new Set(PRODUCTS.map(p=>p.cat))];
+  document.getElementById('prodGrid').innerHTML = cats.map(cat=>{
+    const items = PRODUCTS.filter(p=>p.cat===cat);
+    return items.map(p=>`
+      <div class="prod">
+        <span class="pt"></span>
+        <h4>${esc(p.name)}</h4>
+        <p>${esc(p.desc)}</p>
+        <div class="logo-row">${p.logos.map(l=>`<img src="assets/logos/${l}" alt="">`).join('')}</div>
+      </div>`).join('');
+  }).join('');
+}
+renderProducts();
+
+/* ---- 领导简介渲染 ---- */
+function renderLeaders(){
+  const curr = LEADERS.filter(x=>!x.hist);
+  const hist = LEADERS.filter(x=>x.hist);
+  document.getElementById('leaderGrid').innerHTML = LEADERS.map(ld=>`
+    <div class="lcard" onclick="openModal('${ld.id}')" style="${ld.hist?'opacity:.78;border-left:4px solid #94a3b8':''}">
+      <div class="lavatar">${esc(ld.n[0])}</div>
+      <div>
+        <div class="lname">${esc(ld.n)}${ld.mark?`<span class="mark">${esc(ld.mark)}</span>`:''}${ld.hist?'<span class="mark" style="background:#e2e8f0;border-color:#cbd5e1;color:#475569">历史</span>':''}</div>
+        <div class="ltitle">${esc(ld.t)}</div>
+        <div class="lbio">${esc(ld.brief)}</div>
+      </div>
+    </div>`).join('');
+  const cnt = document.getElementById('leaderCount');
+  if(cnt) cnt.textContent = `现任 ${curr.length} 位 · 历史 ${hist.length} 位 · 点击卡片查看完整档案`;
+}
+renderLeaders();
+
+/* 详细档案块（领导简介详情的原始渲染，作为兜底） */
+/* ── 要点集兼容层（2026-10-12）：长文本字段可为「整字符串」或「要点数组」 ──
+   要点数组形态：[{s:'要点文本', v:'来源版本', lock:0|1, sup:0|1, by:'来源'}] */
+function pointsToText(v){
+  if(Array.isArray(v)){
+    return v.filter(p=>p && p.s && !p.sup).map(p=>String(p.s).trim()).filter(Boolean).join('\n');
+  }
+  const s = String(v ?? '').trim();
+  return (s && s !== '-') ? s : '';
+}
+function pointsMeta(v, curVer){
+  if(!Array.isArray(v) || !v.length) return '';
+  const added = v.filter(p=>p && p.v && p.v!=='-' && p.v!==curVer);
+  if(!added.length) return '';
+  const tags = [...new Set(added.map(p=>p.v))].filter(Boolean);
+  return `<span class="ptag" title="本条要点来自素材版本 ${tags.join('、')}">＋ ${tags.join('、')}</span>`;
+}
+
+function leaderDetailHTML(ld){
+  const F = v => pointsToText(v);
+  const kv = (k,v) => F(v) ? `<div class="kv"><b>${k}</b><span>${esc(v)}</span></div>` : '';
+  const sec = (t,v,style) => F(v) ? `<div class="dl-col"${style?` style="${style}"`:''}><h5>${t}</h5><p>${esc(v).replace(/\n/g,'<br>')}</p></div>` : '';
+  const row = (...cols) => { const c = cols.filter(Boolean).join(''); return c ? `<div class="dl-row">${c}</div>` : ''; };
+  const basic = kv('性别',ld.gender)+kv('出生年月',ld.birth)+kv('籍贯',ld.origin)+kv('党派及宗教信仰',ld.party);
+  return (basic ? `<div class="dl-row"><div class="dl-col"><h5>基本信息</h5>${basic}</div></div>` : '')
+    + row(sec('教育背景',ld.edu), sec('奖惩',ld.award))
+    + row(sec('其他社会身份',ld.identity))
+    + row(sec('工作履历',ld.career,'flex:2;min-width:300px'))
+    + row(sec('著作/代表作品',ld.works), sec('个人爱好（及社会关系）',ld.hobbies));
+}
+function openModal(id){
+  const ld = LEADERS.find(x=>x.id===id);
+  if(!ld) return;
+  document.getElementById('mName').textContent = ld.n;
+  document.getElementById('mTitle').textContent = ld.t;
+  const p = PERSON_INDEX.find(x=>x.name===ld.n);
+  document.getElementById('mBody').innerHTML = p ? personDetailHTML(p,[p]) : leaderDetailHTML(ld);
+  renderExportBar(p || {name:ld.n, titles:[ld.t], orgs:[], depts:[], notes:[], brief:ld.brief||'', leader:ld});
+  document.getElementById('modalBack').classList.add('on');
+  document.body.style.overflow='hidden';
+  window._searchModal = false;
+}
+function closeModal(){
+  document.getElementById('modalBack').classList.remove('on');
+  document.body.style.overflow='';
+  window._searchModal = false;
+}
+
+/* ---- 历史沿革渲染 ---- */
+function renderHistory(){
+  document.getElementById('histTL').innerHTML = HISTORY.map(h=>`
+    <div class="tl-item ${h.tbd?'tbd':''}">
+      <div class="y">${esc(h.y)}${h.tbd?'<span class="tbd-tag">未在终版披露</span>':''}</div>
+      <div class="e">${esc(h.e)}</div>
+    </div>`).join('');
+}
+renderHistory();
+
+/* ---- 更新记录渲染：优先读飞书登记底表快照，无快照则回退内嵌 CHANGELOG ---- */
+function dtStr(v){ if(!v) return ''; return String(v).slice(0,10); }
+function renderChangelog(){
+  const R = (typeof REGISTRY_DATA!=='undefined') ? REGISTRY_DATA : null;
+  const box = document.getElementById('clList');
+  const note = document.getElementById('regNote');
+  if(R && R.changes && R.changes.length){
+    if(note) note.innerHTML = `数据来源：<b>飞书「媒体中台·登记底表」③变更与版本表</b>（${R.changes.length} 条，快照 ${esc(R.generated_at||'')}）· 每条可点开飞书原记录核对`;
+    box.innerHTML = R.changes.map(c=>{
+      const date = dtStr(c['变更日期']);
+      const body = c['变更事项']||'';
+      const src = c['触发素材']||'';
+      const fields = (c['备注']||'').replace(/^字段：/,'');
+      const link = c['_deeplink']||'#';
+      return `<div class="cl-item">
+        <span class="cl-date">${esc(date)}</span>
+        <span class="cl-src doc">文档</span>
+        <div class="cl-body">${esc(body)}
+          ${fields?`<div class="cl-fields">${fields.split('/').map(f=>`<span>${esc(f.trim())}</span>`).join('')}</div>`:''}
+          ${src?`<div style="font-size:11px;color:var(--sub);margin-top:6px">触发素材：${esc(src)}</div>`:''}
+          <a class="reg-src" href="${esc(link)}" target="_blank">🗂 在飞书中查看原记录 ↗</a>
+        </div>
+      </div>`;
+    }).join('');
+  }else{
+    if(note) note.innerHTML = '数据来源：内嵌 changelog（飞书登记底表快照未加载，运行 registry_export.py 生成后可切换为飞书源）';
+    box.innerHTML = CHANGELOG.map(c=>`
+      <div class="cl-item">
+        <span class="cl-date">${esc(c.date)}</span>
+        <span class="cl-src ${esc(c.src)}">${{doc:'文档',chat:'聊天',audio:'录音'}[c.src]||esc(c.src)}</span>
+        <div class="cl-body">${esc(c.body)}
+          <div class="cl-fields">${c.fields.map(f=>`<span>${esc(f)}</span>`).join('')}</div>
+        </div>
+      </div>`).join('');
+  }
+}
+renderChangelog();
+
+/* ---- 字段出处渲染：来自飞书登记底表②表 ---- */
+function renderSources(){
+  const R = (typeof REGISTRY_DATA!=='undefined') ? REGISTRY_DATA : null;
+  const box = document.getElementById('srcList');
+  if(!box) return;
+  if(!R || !R.sources || !R.sources.length){
+    box.innerHTML = '<p class="pnote">字段出处快照未加载（运行 registry_export.py 生成 registry_data.js）。</p>';
+    return;
+  }
+  const stCls = s => (s==='已确认'?'st-ok':(s==='不掌握'?'st-unk':'st-miss'));
+  box.innerHTML = `<table class="srctab">
+    <thead><tr><th>对象</th><th>字段</th><th>值</th><th>来源页码</th><th>时点</th><th>状态</th><th>操作</th></tr></thead>
+    <tbody>${R.sources.map(s=>`
+      <tr>
+        <td><b>${esc(s['对象']||'')}</b></td>
+        <td>${esc(s['字段']||'')}</td>
+        <td>${esc(s['值']||'—')}</td>
+        <td>${esc(s['来源页码']||'—')}</td>
+        <td>${esc(s['时点']||'')}</td>
+        <td><span class="st-badge ${stCls(s['状态'])}">${esc(s['状态']||'')}</span></td>
+        <td><a href="${esc(s['_deeplink']||'#')}" target="_blank">原记录 ↗</a></td>
+      </tr>`).join('')}</tbody>
+  </table>`;
+}
+renderSources();
+
+/* ---- 人名索引（用于搜索浮卡） ---- */
+const PERSON_INDEX = (function buildPersonIndex(){
+  const map = {};
+  const ensure = n => (map[n] = map[n] || {name:n, titles:[], lvs:new Set(), orgs:new Set(), depts:new Set(), notes:[], marks:new Set(), brief:''});
+  PERSON_TREES.forEach(tr=>{
+    const walk = nd=>{
+      if(nd.dept) return;
+      const e = ensure(nd.n);
+      if(nd.t) e.titles.push(nd.t);
+      if(nd.lv) e.lvs.add(nd.lv);
+      if(tr.title) e.orgs.add(tr.title);
+      if(nd.note) e.notes.push(nd.note);
+      if(nd.mark) e.marks.add(nd.mark);
+      (nd.ch||[]).forEach(walk);
+    };
+    walk(tr.root);
+  });
+  DEPTS.forEach(d=>{
+    const add = p=>{ const e=ensure(p.n); if(p.t)e.titles.push(p.t); if(p.lv)e.lvs.add(p.lv); if(d.g)e.orgs.add(d.g); if(d.name)e.depts.add(d.name); if(p.mark)e.marks.add(p.mark); };
+    if(d.head) add(d.head);
+    (d.members||[]).forEach(add);
+  });
+  LEADERS.forEach(L=>{ const e=ensure(L.n); if(L.t)e.titles.push(L.t); if(L.brief)e.brief=L.brief; e.leader=L; });
+  return Object.values(map).map(e=>({
+    name:e.name, titles:[...new Set(e.titles)], lvs:[...e.lvs], orgs:[...e.orgs],
+    depts:[...e.depts], notes:[...new Set(e.notes)], marks:[...e.marks], brief:e.brief, leader:e.leader||null
+  }));
+})();
+
+/* ---- 人名检索：输入人名 → 弹出大浮窗（检索信息 + 详细档案一并呈现） ---- */
+
+/* ---- 档案导出：复制（粘贴进飞书）/ Word / PDF ---- */
+function pxF(v){ const s=String(v==null?'':v).trim(); return (s && s!=='-') ? s : ''; }
+function pxToast(msg){
+  let t=document.getElementById('pxToast');
+  if(!t){ t=document.createElement('div'); t.id='pxToast'; t.className='petoast'; document.body.appendChild(t); }
+  t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove('on'),2200);
+}
+function exportRows(p){
+  const rows=[['姓名',p.name]];
+  if(p.mediaName) rows.push(['所属媒体',p.mediaName]);
+  const titles=[...new Set(p.titles||[])]; if(titles.length) rows.push(['职务',titles.join('；')]);
+  const orgs=[...new Set(p.orgs||[])]; if(orgs.length) rows.push(['来自',orgs.join('；')]);
+  const depts=[...new Set(p.depts||[])]; if(depts.length) rows.push(['部门',depts.join('、')]);
+  const notes=[...(p.notes||[])]; if(notes.length) rows.push(['备注',notes.join('；')]);
+  if(pxF(p.brief)) rows.push(['简介',pxF(p.brief)]);
+  const secs=[]; const ld=p.leader;
+  if(ld){
+    const basic=[];
+    if(pxF(ld.gender)) basic.push(['性别',pxF(ld.gender)]);
+    if(pxF(ld.birth)) basic.push(['出生年月',pxF(ld.birth)]);
+    if(pxF(ld.origin)) basic.push(['籍贯',pxF(ld.origin)]);
+    if(pxF(ld.party)) basic.push(['党派及宗教信仰',pxF(ld.party)]);
+    if(basic.length) secs.push(['基本信息',basic]);
+    if(pxF(ld.edu)) secs.push(['教育背景',[[null,pxF(ld.edu)]]]);
+    if(pxF(ld.award)) secs.push(['奖惩',[[null,pxF(ld.award)]]]);
+    if(pxF(ld.identity)) secs.push(['其他社会身份',[[null,pxF(ld.identity)]]]);
+    if(pxF(ld.career)) secs.push(['工作履历',[[null,pxF(ld.career)]]]);
+    if(pxF(ld.works)) secs.push(['著作/代表作品',[[null,pxF(ld.works)]]]);
+    if(pxF(ld.hobbies)) secs.push(['个人爱好（及社会关系）',[[null,pxF(ld.hobbies)]]]);
+  }
+  return {rows,secs};
+}
+function pxTitle(p){ return (p.leader&&p.leader.t)?p.leader.t:((p.titles&&p.titles[0])||''); }
+function exportText(p){
+  const {rows,secs}=exportRows(p);
+  let t=`【人物档案】${p.name}${p.mediaName?' · '+p.mediaName:''}\n${'─'.repeat(22)}\n`;
+  rows.slice(1).forEach(([k,v])=>{ t+=`${k}：${v}\n`; });
+  secs.forEach(([name,pairs])=>{
+    t+=`\n■ ${name}\n`;
+    pairs.forEach(([k,v])=>{ t+= k?`${k}：${v}\n`:v+'\n'; });
+  });
+  t+=`\n${'─'.repeat(22)}\n导出自 媒体智库中台 · ${new Date().toLocaleDateString('zh-CN')}`;
+  return t;
+}
+window.exportCopy=function(){
+  const p=window._curP; if(!p) return;
+  const t=exportText(p);
+  const done=()=>pxToast('✓ 已复制，可直接粘贴到飞书 / 微信 / 邮件');
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done).catch(()=>pxFallback(t,done)); }
+  else pxFallback(t,done);
+};
+function pxFallback(t,done){
+  const ta=document.createElement('textarea'); ta.value=t;
+  ta.style.cssText='position:fixed;left:-9999px;top:0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ pxToast('复制失败，请重试一次'); }
+  document.body.removeChild(ta);
+}
+function pxDocHTML(p){
+  const {rows,secs}=exportRows(p);
+  const kvRows=rows.map(([k,v])=>`<tr><td style="width:120px;background:#F5F7FA;font-weight:bold;border:1px solid #D9DEE6;padding:6px 10px;white-space:nowrap">${esc(k)}</td><td style="border:1px solid #D9DEE6;padding:6px 10px">${esc(v)}</td></tr>`).join('');
+  const secHTML=secs.map(([name,pairs])=>
+    `<h3 style="font-size:14px;margin:16px 0 6px;border-left:4px solid #E8720C;padding-left:8px">${esc(name)}</h3>`+
+    pairs.map(([k,v])=> k
+      ?`<p style="margin:3px 0"><b>${esc(k)}：</b>${esc(v).replace(/\n/g,'<br>')}</p>`
+      :`<p style="margin:3px 0;line-height:1.8">${esc(v).replace(/\n/g,'<br>')}</p>`).join('')
+  ).join('');
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${esc(p.name)} · 人物档案</title></head>
+<body style="font-family:'Microsoft YaHei','PingFang SC',sans-serif;color:#222;line-height:1.7;max-width:680px;margin:0 auto;padding:20px">
+<h1 style="font-size:21px;margin:0 0 2px">${esc(p.name)}</h1>
+<p style="color:#666;margin:0 0 4px;font-size:13px">${esc(pxTitle(p))}${p.mediaName?' · '+esc(p.mediaName):''}</p>
+<table style="border-collapse:collapse;font-size:13px;margin:10px 0">${kvRows}</table>
+${secHTML}
+<p style="color:#999;font-size:11px;margin-top:20px;border-top:1px solid #EEE;padding-top:8px">导出自 媒体智库中台 · ${new Date().toLocaleDateString('zh-CN')}</p>
+</body></html>`;
+}
+window.exportWord=function(){
+  const p=window._curP; if(!p) return;
+  const blob=new Blob(['\ufeff'+pxDocHTML(p)],{type:'application/msword'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`${p.name}_人物档案.doc`;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },400);
+  pxToast('✓ Word 文档已下载（Word / WPS 均可打开）');
+};
+window.exportPDF=function(){
+  const p=window._curP; if(!p) return;
+  const w=window.open('','_blank');
+  if(!w){ pxToast('打印窗口被浏览器拦截，请允许弹窗后重试'); return; }
+  w.document.write(pxDocHTML(p)); w.document.close();
+  w.focus(); setTimeout(()=>{ try{ w.print(); }catch(e){} },350);
+  pxToast('已打开打印页 → 打印机选「另存为 PDF」即可');
+};
+/* 下载 PDF：直链下载构建期生成的静态档案文件（assets/pdfs/），缺失时兜底转打印 */
+const PDF_MEDIA_ID='eobserver';
+const PXV='20261120-1757';  /* 与中台 SITE_V 同步更新（发版 sed 一并替换） */
+window.exportPDFFile=async function(){
+  const p=window._curP; if(!p) return;
+  const hex=[...p.name].map(c=>c.codePointAt(0).toString(16).padStart(4,'0')).join('');
+  const url='assets/pdfs/'+PDF_MEDIA_ID+'_'+hex+'.pdf?v='+PXV;
+  try{
+    const r=await fetch(url);
+    if(!r.ok) throw new Error(r.status);
+    const b=await r.blob();
+    const u=URL.createObjectURL(b);
+    const a=document.createElement('a'); a.href=u; a.download=p.name+'_人物档案.pdf';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(u),4000);
+    pxToast('✓ PDF 已下载');
+  }catch(e){
+    pxToast('该人员 PDF 暂未生成，已转为打印窗口');
+    exportPDF();
+  }
+};
+function renderExportBar(p){
+  const bar=document.getElementById('pExport');
+  if(!bar) return;
+  if(p){ window._curP=p; bar.style.display='flex'; }
+  else{ window._curP=null; bar.style.display='none'; }
+}
+
+function personDetailHTML(p, hits){
+  const lvBadge = lv => lv ? `<span class="lv ${lv}">${lv==='DP'?'机构':lv}</span>` : '';
+  const F = v => pointsToText(v);
+  const sec = (t,v,style) => F(v) ? `<div class="dl-col"${style?` style="${style}"`:''}><h5>${t}</h5><p>${esc(v).replace(/\n/g,'<br>')}</p></div>` : '';
+  const row = (...cols) => { const c = cols.filter(Boolean).join(''); return c ? `<div class="dl-row">${c}</div>` : ''; };
+  const kv  = (k,v) => F(v) ? `<div class="kv"><b>${k}</b><span>${esc(v)}</span></div>` : '';
+
+  /* ① 多命中切换 */
+  const watch = hits.length > 1
+    ? `<div class="pwatch"><span class="pwl">命中 ${hits.length} 位：</span>${hits.slice(0,12)
+        .map(h=>`<span class="pw${h.name===p.name?' on':''}" onclick="pickPerson('${esc(h.name)}')">${esc(h.name)}</span>`).join('')}</div>`
+    : '';
+
+  /* ② 检索信息块（原小卡片字段，全部保留） */
+  const seen = new Set();
+  const orgs = p.orgs.filter(o=>{ const key=o.split(/[·\s]+/).filter(Boolean).sort().join('|'); if(seen.has(key))return false; seen.add(key); return true; }).join('；');
+  const marks = p.marks.length ? `<span class="mark">${esc(p.marks.join('、'))}</span>` : '';
+  const meta = `<div class="pmeta">
+      ${p.titles.length?`<div class="pmrow"><b>职务</b><span>${esc(p.titles.join('；'))}</span></div>`:''}
+      ${orgs?`<div class="pmrow"><b>来自</b><span>${esc(orgs)}</span></div>`:''}
+      ${p.depts.length?`<div class="pmrow"><b>部门</b><span>${esc(p.depts.join('、'))}</span></div>`:''}
+      ${(p.lvs.length||marks)?`<div class="pmrow"><b>层级</b><span>${p.lvs.map(lvBadge).join(' ')} ${marks}</span></div>`:''}
+      ${p.notes.length?`<div class="pmrow"><b>备注</b><span>${esc(p.notes.join('；'))}</span></div>`:''}
+      ${F(p.brief)?`<div class="pbrief">${esc(F(p.brief))}</div>`:''}
+    </div>`;
+
+  /* ③ 详细档案（教育背景 / 履历 / 著作 / 爱好等，有则一并呈现） */
+  const ld = p.leader;
+  let detail;
+  if(ld){
+    const basic = kv('性别',ld.gender)+kv('出生年月',ld.birth)+kv('籍贯',ld.origin)+kv('党派及宗教信仰',ld.party);
+    detail =
+      (basic ? `<div class="dl-row"><div class="dl-col"><h5>基本信息</h5>${basic}</div></div>` : '') +
+      row(sec('教育背景',ld.edu), sec('奖惩',ld.award)) +
+      row(sec('其他社会身份',ld.identity)) +
+      row(sec('工作履历',ld.career,'flex:2;min-width:300px')) +
+      row(sec('著作/代表作品',ld.works), sec('个人爱好（及社会关系）',ld.hobbies));
+  }else{
+    detail = `<p class="pnote">该人员暂无独立详细档案（收录于组织架构 / 部门信息）。</p>`;
+  }
+  return watch + meta + detail;
+}
+
+/* 依关键字计算命中人员（精确同名排前） */
+function matchPersons(kw){
+  const low = kw.toLowerCase();
+  const hits = PERSON_INDEX.filter(p=>p.name && p.name.toLowerCase().includes(low));
+  return hits.sort((a,b)=>(b.name===kw?1:0)-(a.name===kw?1:0));
+}
+
+/* 展示某位人员（更新表头 + 结果区） */
+function showPerson(p, hits){
+  if(!p) return;
+  document.getElementById('mName').textContent = p.name;
+  document.getElementById('mTitle').textContent = (p.leader && p.leader.t) ? p.leader.t : (p.titles[0]||'');
+  window._pHits = hits || [p];
+  renderExportBar(p);
+  const res = document.getElementById('pmResult');
+  if(res) res.innerHTML = personDetailHTML(p, window._pHits);
+}
+window.pickPerson = function(name){
+  const hits = window._pHits || [];
+  const p = hits.find(x=>x.name===name) || PERSON_INDEX.find(x=>x.name===name);
+  if(p) showPerson(p, hits.length?hits:[p]);
+};
+
+/* 由表头搜索框触发：打开大浮窗（窗内仍可继续检索） */
+function openPersonSearch(kw){
+  document.getElementById('mBody').innerHTML =
+    `<div class="psearch">🔍 <input id="pmQ" type="text" placeholder="输入人名检索，如：文钊、王雅洁…" value="${esc(kw||'')}"></div><div id="pmResult"></div>`;
+  document.getElementById('modalBack').classList.add('on');
+  document.body.style.overflow='hidden';
+  window._searchModal = true;
+  const hits = matchPersons(kw||'');
+  if(hits.length) showPerson(hits[0], hits);
+  else document.getElementById('pmResult').innerHTML = `<p class="pnote">未匹配到人员，换个关键字试试。</p>`;
+  const pq = document.getElementById('pmQ');
+  /* 焦点不抢：从顶部搜索框触发时保持原处继续输入（每键实时刷新浮窗）；仅非头部触发才聚焦窗内框 */
+  if(pq && document.activeElement !== q){ pq.focus(); try{ pq.setSelectionRange(pq.value.length, pq.value.length); }catch(e){} }
+}
+
+/* 表头搜索框联动：有命中 → 弹大浮窗；无命中 → 若浮窗由搜索打开则关闭 */
+function personSearch(kw){
+  if(!kw){ if(window._searchModal) closeModal(); return; }
+  const hits = matchPersons(kw);
+  if(!hits.length){ if(window._searchModal) closeModal(); return; }
+  openPersonSearch(kw);
+}
+
+/* 浮窗内搜索框：实时检索（只重绘结果区，输入焦点不丢） */
+document.addEventListener('input', e=>{
+  if(!e.target || e.target.id !== 'pmQ') return;
+  const kw = e.target.value.trim();
+  if(!kw){ document.getElementById('pmResult').innerHTML = `<p class="pnote">输入人名开始检索。</p>`; return; }
+  const hits = matchPersons(kw);
+  if(hits.length) showPerson(hits[0], hits);
+  else document.getElementById('pmResult').innerHTML = `<p class="pnote">未匹配到人员，换个关键字试试。</p>`;
+});
+
+/* ---- 站内搜索：命中高亮 / 未命中淡出 + 人名浮卡 ---- */
+const q = document.getElementById('q');
+/* 再次搜索体验：点击/聚焦搜索框全选旧词（直接输入即替换）；回车按当前值强制触发一次检索 */
+const qSelectAll = ()=>{ try{ q.select(); }catch(e){} };
+q.addEventListener('focus', qSelectAll);
+q.addEventListener('click', qSelectAll);
+q.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); personSearch(q.value.trim()); } });
+q.addEventListener('input', ()=>{
+  const kw = q.value.trim();
+  document.querySelectorAll('.hl').forEach(h=>{
+    const p = h.parentNode; p.replaceChild(document.createTextNode(h.textContent), h); p.normalize();
+  });
+  if(!kw){ document.querySelectorAll('.dim').forEach(x=>x.classList.remove('dim')); personSearch(''); return; }
+  const cards = document.querySelectorAll('main section');
+  cards.forEach(c=>{
+    const hit = c.textContent.includes(kw);
+    c.classList.toggle('dim', !hit);
+  });
+  const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT);
+  const hits = [];
+  while(walker.nextNode()){
+    if(walker.currentNode.textContent.includes(kw)) hits.push(walker.currentNode);
+  }
+  hits.slice(0, 60).forEach(node=>{
+    const frag = document.createDocumentFragment();
+    let rest = node.textContent;
+    let i;
+    while((i = rest.indexOf(kw)) !== -1){
+      frag.appendChild(document.createTextNode(rest.slice(0, i)));
+      const s = document.createElement('span'); s.className = 'hl'; s.textContent = kw;
+      frag.appendChild(s);
+      rest = rest.slice(i + kw.length);
+    }
+    frag.appendChild(document.createTextNode(rest));
+    node.parentNode.replaceChild(frag, node);
+  });
+  personSearch(kw);
+});
+
+/* Esc 关闭浮窗 */
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){
+    const mb = document.getElementById('modalBack');
+    if(mb && mb.classList.contains('on')) closeModal();
+  }
+});
+</script>
+</body>
+</html>

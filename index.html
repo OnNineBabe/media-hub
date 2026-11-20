@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>媒体智库 · Media Hub</title>
+<style>
+:root{
+  --bg:#f5f7fa; --card:#ffffff; --ink:#1f2937; --sub:#6b7280;
+  --line:#e5eaf1; --blue:#2563eb; --blue-deep:#1e40af;
+  --grad:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#3b82f6);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px;}
+/* 顶部品牌区 */
+.hero{background:var(--grad);color:#fff;padding:34px 0 46px;}
+.hero .row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.logo-badge{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.hero h1{font-size:24px;letter-spacing:1px;}
+.hero .en{font-size:11px;opacity:.75;letter-spacing:2px;margin-top:3px;}
+.hero .desc{font-size:13px;opacity:.85;margin-top:12px;line-height:1.8;max-width:760px;}
+.hero .stats{display:flex;gap:26px;margin-top:18px;flex-wrap:wrap;}
+.hero .stats div{font-size:12px;opacity:.85;}
+.hero .stats b{font-size:20px;margin-right:6px;color:#fff;}
+/* 搜索与筛选 */
+.toolbar{display:flex;gap:12px;align-items:center;margin:-22px 0 20px;flex-wrap:wrap;}
+.search{flex:1;min-width:260px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 18px;font-size:14px;display:flex;align-items:center;gap:10px;box-shadow:0 6px 18px rgba(30,64,175,.07);}
+.search input{border:none;outline:none;flex:1;font-size:14px;background:transparent;color:var(--ink);}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:8px 16px;font-size:13px;color:var(--sub);cursor:pointer;transition:.15s;}
+.chip:hover{border-color:#c6d6ea;color:var(--blue);}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+/* 卡片墙 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding-bottom:60px;}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s;position:relative;overflow:hidden;display:block;text-decoration:none;color:var(--ink);}
+.mcard:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(31,41,55,.10);border-color:#c6d6ea;}
+.mcard .stripe{position:absolute;top:0;left:0;right:0;height:4px;}
+.mcard .mrow{display:flex;align-items:center;gap:12px;}
+.mlogo{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:700;flex-shrink:0;}
+.mcard h3{font-size:16px;font-weight:700;}
+.mcard .en{font-size:11px;color:var(--sub);letter-spacing:.3px;margin-top:2px;}
+.mcard .st{margin-left:auto;font-size:10.5px;border-radius:5px;padding:3px 9px;font-weight:600;flex-shrink:0;}
+.st.ok{color:#0e7a5f;background:#e6f5ef;border:1px solid #bfe5d6;}
+.st.wait{color:#b45309;background:#fdf3e3;border:1px solid #f2ddba;}
+.mcard .desc{font-size:12.5px;color:var(--sub);line-height:1.65;margin:12px 0 10px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:62px;}
+.mcard .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.mcard .tags span{font-size:10.5px;background:#f1f5fb;color:#5470a0;border-radius:4px;padding:2px 8px;}
+.mcard .foot{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--sub);border-top:1px dashed var(--line);padding-top:10px;}
+.mcard .go{color:var(--blue);font-weight:600;}
+.mcard.hit{border-color:#93b8f0;box-shadow:0 0 0 3px rgba(147,184,240,.25);}
+.mcard.dim{opacity:.35;}
+/* toast */
+#toast{position:fixed;left:50%;bottom:36px;transform:translateX(-50%) translateY(20px);background:#1f2937;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:99;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.empty{text-align:center;color:var(--sub);padding:50px 0;font-size:14px;display:none;}
+footer{background:#eef2f7;border-top:1px solid var(--line);padding:22px 0;font-size:11.5px;color:var(--sub);text-align:center;line-height:1.9;}
+/* ===== 人员检索大浮窗（跨媒体） ===== */
+.modal-back{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;}
+.modal-back.on{display:flex;}
+.modal-card{background:#fff;border-radius:16px;max-width:800px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(15,23,42,.32);position:relative;}
+.modal-head{background:var(--grad);color:#fff;padding:22px 26px;}
+.modal-head h3{font-size:20px;}
+.modal-head .sub{font-size:13px;opacity:.92;margin-top:5px;}
+.modal-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.42);color:#fff;border-radius:8px;width:34px;height:34px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:rgba(255,255,255,.35);}
+/* 档案导出条 */
+.pexport{margin-top:13px;display:none;gap:8px;flex-wrap:wrap}
+.pex{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:8px;padding:4.5px 14px;font-size:12.5px;cursor:pointer;font-family:inherit;line-height:1.5}
+.pex:hover{background:rgba(255,255,255,.35)}
+.petoast{position:fixed;left:50%;bottom:38px;transform:translateX(-50%);background:#1F2733;color:#fff;padding:9px 20px;border-radius:10px;font-size:13.5px;z-index:10050;opacity:0;transition:opacity .25s;pointer-events:none;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.petoast.on{opacity:1}
+.modal-body{padding:22px 26px 28px;}
+.psearch{display:flex;align-items:center;gap:9px;background:#f4f7fb;border:1px solid var(--line);border-radius:10px;padding:9px 14px;margin-bottom:15px;}
+.psearch input{border:none;outline:none;background:transparent;flex:1;font-size:13.5px;color:var(--ink);}
+.psearch input::placeholder{color:#9aa3af;}
+.pwatch{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px;align-items:center;}
+.pwatch .pwl{font-size:11px;color:var(--sub);font-weight:700;margin-right:2px;}
+.pwatch .pw{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:4px 12px;cursor:pointer;color:var(--sub);}
+.pwatch .pw:hover{border-color:var(--blue);color:var(--blue);}
+.pwatch .pw.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+.pmeta{background:#f4f7fb;border:1px solid #dde7f3;border-radius:11px;padding:13px 16px;margin-bottom:16px;}
+.pmeta .pmrow{display:flex;gap:8px;font-size:12px;line-height:1.7;margin-bottom:5px;}
+.pmeta .pmrow:last-child{margin-bottom:0;}
+.pmeta .pmrow b{color:#1e40af;font-weight:700;min-width:52px;flex-shrink:0;}
+.pmeta .pmrow span{color:var(--ink);flex:1;}
+.pmeta .pbrief{font-size:12px;color:#4b5563;line-height:1.75;border-top:1px dashed #dbe4f0;padding-top:8px;margin-top:8px;}
+.pjump{display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:var(--blue);color:#fff;border-radius:9px;padding:8px 16px;font-size:12.5px;font-weight:600;text-decoration:none;}
+.pjump:hover{background:var(--blue-deep);}
+.lv{font-size:9.5px;color:#fff;border-radius:4px;padding:1.5px 6px;font-weight:600;display:inline-block;}
+.lv.L1{background:#1e3a8a;} .lv.L2{background:#2563eb;} .lv.L3{background:#3b82f6;} .lv.L4{background:#60a5fa;} .lv.L5{background:#93c5fd;color:#1e3a8a;} .lv.DP{background:#64748b;}
+.mark{font-size:10px;color:#b91c1c;border:1px solid #f0c4bf;border-radius:4px;padding:1px 6px;font-weight:600;background:#fdf0ef;display:inline-block;}
+.dl-row{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px;}
+.dl-col{flex:1;min-width:220px;}
+.dl-col h5{font-size:13px;color:var(--blue-deep);margin-bottom:7px;border-left:3px solid var(--blue);padding-left:8px;}
+.dl-col p{font-size:12px;color:var(--ink);line-height:1.75;}
+.dl-col .kv{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;margin-bottom:6px;}
+.dl-col .kv b{color:var(--sub);font-weight:600;min-width:60px;}
+.dl-col .kv span{color:var(--ink);}
+.pnote{font-size:12px;color:var(--sub);line-height:1.7;padding:2px 0;}
+.feedbtn{display:inline-flex;align-items:center;gap:12px;margin-top:20px;
+  background:#fff;border:1.5px solid var(--acc);border-radius:11px;padding:12px 18px;
+  text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,.05);transition:.15s;max-width:100%;}
+.feedbtn:hover{background:var(--acc-soft);transform:translateY(-1px);
+  box-shadow:0 3px 10px rgba(232,114,12,.18);}
+.feedbtn .fb-ico{font-size:19px;line-height:1;}
+.feedbtn span:nth-child(2){font-size:13px;color:var(--sub);}
+.feedbtn b{color:var(--ink);font-size:14.5px;font-weight:600;margin-right:2px;}
+.feedbtn .fb-arrow{color:var(--acc);font-weight:700;font-size:15px;}
+/* 登记底表入口（飞书 Base 快照互通） */
+.regbtn{display:flex;align-items:center;gap:12px;margin-top:10px;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.6);border-radius:11px;padding:11px 18px;text-decoration:none;max-width:520px;transition:.15s;}
+.regbtn:hover{background:#fff;transform:translateY(-1px);box-shadow:0 4px 14px rgba(15,23,42,.15);}
+.regbtn .rb-ico{font-size:19px;line-height:1;}
+.regbtn .rb-main{font-size:13px;color:var(--ink);}
+.regbtn .rb-main b{font-size:14px;}
+.regbtn .rb-main small{display:block;font-size:11px;color:var(--sub);margin-top:2px;}
+.regbtn .rb-arrow{margin-left:auto;color:var(--blue);font-weight:700;font-size:15px;}
+/* 登记底表查看浮窗 */
+.rb-back{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;z-index:10000;padding:20px;}
+.rb-back.on{display:flex;}
+.rb-card{background:#fff;border-radius:16px;max-width:980px;width:100%;max-height:88vh;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.32);display:flex;flex-direction:column;}
+.rb-head{background:var(--grad);color:#fff;padding:20px 26px;display:flex;align-items:flex-start;gap:12px;}
+.rb-head h3{font-size:19px;}
+.rb-head .s{font-size:12px;opacity:.9;margin-top:4px;line-height:1.6;}
+.rb-head .x{margin-left:auto;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:8px;width:32px;height:32px;font-size:17px;cursor:pointer;flex-shrink:0;}
+.rb-tabs{display:flex;gap:4px;padding:12px 22px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.rb-tab{font-size:12.5px;padding:8px 14px;cursor:pointer;color:var(--sub);border-bottom:2px solid transparent;font-weight:600;}
+.rb-tab.on{color:var(--blue);border-bottom-color:var(--blue);}
+.rb-body{padding:16px 22px 24px;overflow-y:auto;}
+.rb-meta{font-size:11.5px;color:var(--sub);margin-bottom:12px;line-height:1.7;}
+.rb-meta b{color:var(--blue);}
+.rtab{width:100%;border-collapse:collapse;font-size:11.5px;}
+.rtab th,.rtab td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;line-height:1.55;}
+.rtab th{background:#f4f7fb;color:var(--sub);font-weight:600;white-space:nowrap;position:sticky;top:0;}
+.rtab a{color:var(--blue);text-decoration:none;}
+.rtab a:hover{text-decoration:underline;}
+.rtab tr:hover td{background:#fafcff;}
+.rb-foot{padding:12px 22px;border-top:1px solid var(--line);background:#fafcff;font-size:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.rb-foot .open{background:var(--blue);color:#fff;border-radius:8px;padding:8px 16px;text-decoration:none;font-weight:600;font-size:12.5px;}
+.rb-foot .open:hover{background:var(--blue-deep);}
+.rb-foot .tip{color:var(--sub);}
+@media(max-width:640px){.hero .stats{gap:16px;}.feedbtn{flex-wrap:wrap;gap:8px;}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="row">
+      <div class="logo-badge">🗂</div>
+      <div>
+        <h1>媒体智库 · 中台</h1>
+        <div class="en">MEDIA INTELLIGENCE HUB</div>
+      </div>
+    </div>
+    <p class="desc">党央媒与重点商业媒体资料库：组织架构 · 媒体产品 · 人事架构 · 重要领导简介 · 历史沿革。每家媒体一个独立站点，点卡片进入详情；更新以文档 / 录音 / 聊天告知方式入库，自动留痕。</p>
+    <div class="stats">
+      <div><b id="nAll">6</b>媒体总量</div>
+      <div><b id="nDone">2</b>已建档</div>
+      <div><b id="nWait">4</b>待导入</div>
+      <div><b id="nP">55</b>在库人员</div>
+    </div>
+    <a class="feedbtn" href="media_hub/feed.html?v=20261120-1757">
+      <span class="fb-ico">📥</span>
+      <span><b>素材投喂入口</b>　PPT / Word / Excel / PDF / 图片 / 录音 → 自动解析并增量入库</span>
+      <span class="fb-arrow">→</span>
+    </a>
+    <a class="regbtn" href="javascript:void(0)" onclick="openRegistry()">
+      <span class="rb-ico">🗂</span>
+      <span class="rb-main"><b>登记底表 · 点击查看全部记录</b><small id="regEntrySub">来源素材台账 / 字段级出处 / 变更与版本 · 与本站双向互通</small></span>
+      <span class="rb-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- 登记底表查看浮窗 -->
+<div class="rb-back" id="rbBack" onclick="if(event.target===this)closeRegistry()">
+  <div class="rb-card">
+    <div class="rb-head">
+      <div><h3>🗂 媒体中台 · 登记底表</h3><div class="s">权威源在飞书多维表格，此处为数据快照（点每条「原记录」深链可在飞书中打开）</div></div>
+      <button class="x" onclick="closeRegistry()">✕</button>
+    </div>
+    <div class="rb-tabs">
+      <div class="rb-tab on" data-t="materials" onclick="rbSwitch('materials')">① 来源素材台账</div>
+      <div class="rb-tab" data-t="sources" onclick="rbSwitch('sources')">② 字段级出处</div>
+      <div class="rb-tab" data-t="changes" onclick="rbSwitch('changes')">③ 变更与版本</div>
+    </div>
+    <div class="rb-body" id="rbBody"></div>
+    <div class="rb-foot">
+      <a class="open" id="rbOpenFeishu" href="https://oxnvbgw134r.feishu.cn/base/Ud1RbrD7aa9vyzsDWWncGjzJnOf" target="_blank">🗂 在飞书中打开原表 ↗</a>
+      <span class="tip" id="rbFootTip">若飞书提示"文档不存在"，说明浏览器登录的账号与建表账号不同——数据以本快照为准，可用你本人账号登录后访问。</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="toolbar">
+    <div class="search">🔍 <input id="q" type="text" placeholder="全文搜索：媒体名 / 人名 / 职务 / 部门 / 产品…（如：经观、文钊、总编辑）"></div>
+    <div class="chips">
+      <span class="chip on" data-f="all">全部</span>
+      <span class="chip" data-f="已建档">已建档</span>
+      <span class="chip" data-f="导入中">待导入</span>
+      <span class="chip" data-f="财经">财经</span>
+      <span class="chip" data-f="综合">综合</span>
+      <span class="chip" data-f="都市">都市</span>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty">没有符合条件的结果</div>
+</div>
+
+<footer>
+  媒体智库 Media Hub · 数据与展示分离（data/media_db.json → 页面自动生成）· 每次变动写入 changelog 留痕<br>
+  点击「已建档」媒体卡片进入该媒体独立站点；「待导入」媒体点击后提示资料入库进度。
+</footer>
+
+<div class="modal-back" id="modalBack" onclick="if(event.target===this)closeModal()">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="mName"></h3>
+      <div class="sub" id="mTitle"></div>
+      <div class="pexport" id="pExport">
+        <button class="pex" onclick="exportCopy()">⧉ 复制档案（粘贴进飞书）</button>
+        <button class="pex" onclick="exportWord()">⇩ 导出 Word</button>
+        <button class="pex" onclick="exportPDFFile()">⇩ 下载 PDF</button>
+        <button class="pex" onclick="exportPDF()">🖨 打印</button>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- ?v= 与 SITE_V 同步：改版重部署时一并更新，绕过边缘缓存 -->
+<script src="media_hub/assets/person_data.js?v=20261120-1757"></script>
+<!-- 登记底表快照（飞书 Base 三表导出，registry_export.py 生成） -->
+<script src="media_hub/assets/registry_data.js?v=20261120-1757"></script>
+
+<script>
+/* ============ 数据层（正式版拆出为 media_db.json，由更新工作流维护） ============ */
+/* 站点版本号：每次重新部署后更新（子页/资产链接带 ?v= 以绕过边缘缓存旧快照） */
+const SITE_V = '20261120-1757';
+const MEDIA = [
+{
+  id:'eobserver', name:'经济观察报', en:'The Economic Observer', abbr:'经观',
+  type:'财经', color:'#E8720C', color2:'#F5A623', status:'已建档', updated:'2026-10-08',
+  link:`media_hub/eobserver.html?v=${SITE_V}`,
+  tags:['产经深度','周报','ESG','宏观研究院','新媒体'],
+  desc:'创刊于 2001 年的全国性财经周报。双轨架构：经济观察报社（采编）+ 经观传媒（经营），22 部门 / 13 位高管（现任 6 · 历史 7：何力/赵力/张忠"三驾马车"+张宏/于威/张勇/陈哲）/ 23 个媒体产品（官方渠道+新媒体矩阵）/ 14 条历史沿革。最新 2026-10-08 终版增量：① 领导层职务按终版校准——郭宏超改为「副总编辑、经观传媒高级副总裁、董事」，杜惠补「高级副总裁」并加「新媒体整合传播中心负责人」，王咏静补「《现代广告》杂志出品人」，文钊去「社委」；② 刘坚终版标题明确「即将退休」，总编辑/社长接任时点订正为「约2005年底-2006年初任总编辑、2006年11月接任社长」；③ 部门层订正与补人——蔡越坤任资深记者（债券/信托/银行条线）、品牌活动部负责人改为张瑾、广告营销中心补周继平为负责人（驻广州）、全媒体条线补栗新（摄制部总监）、周增军任华南新闻中心分社社长（驻广州）。',
+  search:'经观 文钊 刘坚 郭宏超 邹卫国 王咏静 杜惠 陈哲 何力 赵力 张忠 张宏 于威 张勇 袁金秋 张雅楠 宋笛 任晓宁 张英 高飞昌 洪小棠 王雅洁 欧阳晓红 李微敖 田宝国 阿茹汗 郑淯心 言咏 宋馥李 祝丽佳 罗雯 高杉 秦峰 陈曦 林楠 顾佳 马政 李晓丹 王丽娜 周雪 张晶玲 胡群 高洁 执行总编辑 社长 宏观经济研究院 管理与创新案例研究院 金融市场 政策与产业 大消费 TMT 汽车 金融机构 ESG 城市与不动产 大健康 国际部 深度调查 大消费事业部 综合产业事业部 广告营销中心 新媒体整合传播中心 经济观察网 媒体产品 官方渠道 新媒体 历史沿革 大事记 官方微信 官方微博 视频号 APP 小程序 经观橙心 好物商城',
+},
+{
+  id:'bjnews', name:'新京报', en:'Beijing News', abbr:'新京',
+  type:'都市', color:'#B01F24', color2:'#D64545', status:'导入中', updated:'2026-06-25', link:'',
+  tags:['都市报','融媒体','贝壳财经'],
+  desc:'（资料待导入）现有载体：《260525V 新京报档案》PPT、《新京报组织架构》《新京报及贝壳财经简介》。',
+  search:'新京报 贝壳财经',
+},
+{
+  id:'ifeng', name:'凤凰财经 & 科技', en:'Phoenix Finance & Tech', abbr:'凤凰',
+  type:'综合', color:'#0F6FA8', color2:'#2E9BD6', status:'导入中', updated:'2026-05-16', link:'',
+  tags:['门户','财经频道','科技频道'],
+  desc:'（资料待导入）现有载体：《260516 凤凰财经&科技档案》PPT、《凤凰最新架构图 260626》《2026 凤凰整合营销招商资源宝典》。',
+  search:'凤凰 凤凰网',
+},
+{
+  id:'21jingji', name:'21 世纪经济报道', en:'21st Century Business Herald', abbr:'21',
+  type:'财经', color:'#1F5FA8', color2:'#4F8CC9', status:'导入中', updated:'2026-05-08', link:'',
+  tags:['财经周报','南方系','21财经APP'],
+  desc:'（资料待导入）现有载体：《260508 21世纪经济报道》PPT、《220815 21世纪经济报道档案》PPT。',
+  search:'21世纪 21财经 南方',
+},
+{
+  id:'sina', name:'新浪新闻 / 新浪财科', en:'Sina News & Sina Finance', abbr:'新浪',
+  type:'综合', color:'#D8261C', color2:'#F06A5E', status:'导入中', updated:'2026-07-02', link:'',
+  tags:['门户','财经','新浪网'],
+  desc:'（资料待导入）现有载体：《260402 新浪新闻档案》《260702 新浪财科档案》《220908 新浪档案（含新浪新闻+新浪财科）》。',
+  search:'新浪 新浪网',
+},
+{
+  id:'yicai', name:'第一财经', en:'Yicai', abbr:'一财',
+  type:'财经', color:'#0E7A5F', color2:'#3BA98A', status:'已建档', updated:'2026-09-02', link:`media_hub/yicai.html?v=${SITE_V}`,
+  tags:['广电系财经','日报','一财全球','双轨'],
+  desc:'创立于 2003 年的 SMG 旗下财经媒体集团（正厅级事业单位）。内容端（电视/日报/杂志/广播/资讯/研究院）+ 运营端双轨架构，12 业务板块、24 个媒体产品、7 位核心高管档案、2003–2024 历史沿革。',
+  search:'第一财经 一财 李蓉 杨宇东 陈思劼 姚剑 赵嘉 李晶 汪钧 于舰 总编辑 电视中心 日报新闻中心 杂志中心 一财全球 新一线城市研究所 CBNData 东方财经',
+},
+];
+
+/* ============ 展示层 ============ */
+const grid = document.getElementById('grid');
+const q = document.getElementById('q');
+let filter = 'all';
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+function render(){
+  const kw = q.value.trim().toLowerCase();
+  grid.innerHTML = '';
+  let shown = 0;
+  MEDIA.forEach(m=>{
+    if(filter !== 'all' && m.status !== filter && m.type !== filter) return;
+    const hit = !kw || (m.name + m.en + m.abbr + m.type + m.desc + m.search).toLowerCase().includes(kw);
+    if(!hit && kw) return;
+    shown++;
+    const a = document.createElement('a');
+    a.className = 'mcard' + (kw ? ' hit' : '');
+    a.href = m.link || 'javascript:void(0)';
+    if(!m.link){
+      a.onclick = (e)=>{ e.preventDefault(); toast('「' + m.name + '」资料待导入：PPT 档案解析入库后即可开放站点'); };
+    }
+    a.innerHTML = `
+      <span class="stripe" style="background:linear-gradient(90deg,${m.color},${m.color2})"></span>
+      <div class="mrow">
+        <span class="mlogo" style="background:linear-gradient(135deg,${m.color},${m.color2})">${m.abbr[0]}</span>
+        <div><h3>${m.name}</h3><div class="en">${m.en}</div></div>
+        <span class="st ${m.status==='已建档'?'ok':'wait'}">${m.status}</span>
+      </div>
+      <p class="desc">${m.desc}</p>
+      <div class="tags">${m.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+      <div class="foot"><span>更新：${m.updated}</span><span class="go">${m.link ? '进入站点 →' : '待导入'}</span></div>`;
+    grid.appendChild(a);
+  });
+  document.getElementById('empty').style.display = shown ? 'none' : 'block';
+  document.getElementById('nDone').textContent = MEDIA.filter(m=>m.status==='已建档').length;
+  document.getElementById('nWait').textContent = MEDIA.filter(m=>m.status!=='已建档').length;
+}
+
+document.querySelectorAll('.chip').forEach(c=>{
+  c.onclick = ()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+    c.classList.add('on'); filter = c.dataset.f; render();
+  };
+});
+/* 再次搜索体验：点击/聚焦搜索框全选旧词（直接输入即替换）；回车按当前值强制触发一次检索 */
+const qSelectAll = ()=>{ try{ q.select(); }catch(e){} };
+q.addEventListener('focus', qSelectAll);
+q.addEventListener('click', qSelectAll);
+q.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); render(); hubPersonSearch(q.value.trim()); } });
+q.oninput = ()=>{ render(); hubPersonSearch(q.value.trim()); };
+render();
+
+/* 登记底表入口：显示飞书快照真实记录数（registry_export.py 生成） */
+(function(){
+  const sub=document.getElementById('regEntrySub');
+  if(!sub) return;
+  const R=(typeof REGISTRY_DATA!=='undefined')?REGISTRY_DATA:null;
+  if(R){
+    const n=(R.materials?R.materials.length:0)+(R.sources?R.sources.length:0)+(R.changes?R.changes.length:0);
+    sub.textContent=`来源素材 ${R.materials?R.materials.length:0} / 字段出处 ${R.sources?R.sources.length:0} / 变更记录 ${R.changes?R.changes.length:0} · 共 ${n} 条 · 与本站双向互通`;
+  }
+})();
+
+/* 登记底表查看浮窗：直接展示三表快照，不依赖飞书账号权限 */
+const RB_FIELDS = {
+  materials:['素材名称','媒体','版本日期','提供人','覆盖页码','存放路径','投喂日期','备注'],
+  sources:['对象','媒体','字段','值','来源页码','时点','状态','关联素材','最后核对日期','备注'],
+  changes:['变更事项','媒体','变更日期','触发素材','网页版本号','操作人','备注']
+};
+let rbCur='materials';
+function rbEsc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function rbCell(v){
+  if(v==null||v==='') return '—';
+  if(Array.isArray(v)) v=v.join('、');
+  const s=String(v);
+  if(/^https?:\/\//.test(s)) return `<a href="${rbEsc(s)}" target="_blank">${rbEsc(s)}↗</a>`;
+  const d = /^\d{4}-\d{2}-\d{2}/.test(s) ? s.slice(0,10) : s;
+  return rbEsc(d);
+}
+function rbRender(t){
+  const R=(typeof REGISTRY_DATA!=='undefined')?REGISTRY_DATA:null;
+  const rows=R&&R[t]?R[t]:[];
+  const fields=RB_FIELDS[t]||[];
+  const box=document.getElementById('rbBody');
+  if(!rows.length){ box.innerHTML='<p class="pnote">该表快照暂无数据。</p>'; return; }
+  let html=`<div class="rb-meta">共 <b>${rows.length}</b> 条 · 快照生成于 ${rbEsc(R.generated_at||'')} · 数据源：飞书「媒体中台·登记底表」</div>`;
+  html+='<table class="rtab"><thead><tr>'+fields.map(f=>`<th>${rbEsc(f)}</th>`).join('')+'<th>操作</th></tr></thead><tbody>';
+  rows.forEach(r=>{
+    html+='<tr>'+fields.map(f=>`<td>${rbCell(r[f])}</td>`).join('')+
+      `<td>${r['_deeplink']?`<a href="${rbEsc(r['_deeplink'])}" target="_blank">原记录↗</a>`:'—'}</td></tr>`;
+  });
+  html+='</tbody></table>';
+  box.innerHTML=html;
+}
+function rbSwitch(t){
+  rbCur=t;
+  document.querySelectorAll('.rb-tab').forEach(x=>x.classList.toggle('on', x.dataset.t===t));
+  rbRender(t);
+}
+function openRegistry(){ document.getElementById('rbBack').classList.add('on'); rbRender(rbCur); }
+function closeRegistry(){ document.getElementById('rbBack').classList.remove('on'); }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeRegistry(); });
+
+/* ============ 人员检索：跨媒体大浮窗 ============ */
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+const HUB_PERSONS = (function(){
+  const out=[];
+  if(typeof PERSON_DATA==='undefined') return out;
+  Object.keys(PERSON_DATA).forEach(mk=>{
+    const M = PERSON_DATA[mk]||{};
+    const mediaLink = M.link ? M.link.split('?')[0] + '?v=' + SITE_V : '';
+    const map={};
+    const ensure = n => (map[n] = map[n] || {name:n, media:mk, mediaName:M.name, mediaLink, mediaColor:M.color,
+      titles:[], lvs:new Set(), orgs:new Set(), depts:new Set(), notes:[], marks:new Set(), brief:'', leader:null});
+    (M.trees||[]).forEach(tr=>{
+      const walk = nd=>{ if(!nd || nd.dept) return; const e=ensure(nd.n);
+        if(nd.t)e.titles.push(nd.t); if(nd.lv)e.lvs.add(nd.lv); if(tr.title)e.orgs.add(tr.title);
+        if(nd.note)e.notes.push(nd.note); if(nd.mark)e.marks.add(nd.mark); (nd.ch||[]).forEach(walk); };
+      if(tr.root) walk(tr.root);
+    });
+    (M.depts||[]).forEach(d=>{
+      const add = p=>{ if(!p||!p.n) return; const e=ensure(p.n);
+        if(p.t)e.titles.push(p.t); if(p.lv)e.lvs.add(p.lv); if(d.g)e.orgs.add(d.g); if(d.name)e.depts.add(d.name); if(p.mark)e.marks.add(p.mark); };
+      if(d.head) add(d.head); (d.members||[]).forEach(add);
+    });
+    (M.leaders||[]).forEach(L=>{ const e=ensure(L.n); if(L.t)e.titles.push(L.t); if(L.brief)e.brief=L.brief; e.leader=L; });
+    Object.values(map).forEach(e=>out.push({
+      name:e.name, media:e.media, mediaName:e.mediaName, mediaLink:e.mediaLink, mediaColor:e.mediaColor,      titles:[...new Set(e.titles)], lvs:[...e.lvs], orgs:[...e.orgs], depts:[...e.depts],
+      notes:[...new Set(e.notes)], marks:[...e.marks], brief:e.brief, leader:e.leader
+    }));
+  });
+  return out;
+})();
+
+function hubMatch(kw){
+  const low = (kw||'').toLowerCase();
+  if(!low) return [];
+  const hits = HUB_PERSONS.filter(p=>p.name && p.name.toLowerCase().includes(low));
+  return hits.sort((a,b)=>(b.name===kw?1:0)-(a.name===kw?1:0));
+}
+
+/* ---- 档案导出：复制（粘贴进飞书）/ Word / PDF ---- */
+function pxF(v){ const s=String(v==null?'':v).trim(); return (s && s!=='-') ? s : ''; }
+function pxToast(msg){
+  let t=document.getElementById('pxToast');
+  if(!t){ t=document.createElement('div'); t.id='pxToast'; t.className='petoast'; document.body.appendChild(t); }
+  t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove('on'),2200);
+}
+function exportRows(p){
+  const rows=[['姓名',p.name]];
+  if(p.mediaName) rows.push(['所属媒体',p.mediaName]);
+  const titles=[...new Set(p.titles||[])]; if(titles.length) rows.push(['职务',titles.join('；')]);
+  const orgs=[...new Set(p.orgs||[])]; if(orgs.length) rows.push(['来自',orgs.join('；')]);
+  const depts=[...new Set(p.depts||[])]; if(depts.length) rows.push(['部门',depts.join('、')]);
+  const notes=[...(p.notes||[])]; if(notes.length) rows.push(['备注',notes.join('；')]);
+  if(pxF(p.brief)) rows.push(['简介',pxF(p.brief)]);
+  const secs=[]; const ld=p.leader;
+  if(ld){
+    const basic=[];
+    if(pxF(ld.gender)) basic.push(['性别',pxF(ld.gender)]);
+    if(pxF(ld.birth)) basic.push(['出生年月',pxF(ld.birth)]);
+    if(pxF(ld.origin)) basic.push(['籍贯',pxF(ld.origin)]);
+    if(pxF(ld.party)) basic.push(['党派及宗教信仰',pxF(ld.party)]);
+    if(basic.length) secs.push(['基本信息',basic]);
+    if(pxF(ld.edu)) secs.push(['教育背景',[[null,pxF(ld.edu)]]]);
+    if(pxF(ld.award)) secs.push(['奖惩',[[null,pxF(ld.award)]]]);
+    if(pxF(ld.identity)) secs.push(['其他社会身份',[[null,pxF(ld.identity)]]]);
+    if(pxF(ld.career)) secs.push(['工作履历',[[null,pxF(ld.career)]]]);
+    if(pxF(ld.works)) secs.push(['著作/代表作品',[[null,pxF(ld.works)]]]);
+    if(pxF(ld.hobbies)) secs.push(['个人爱好（及社会关系）',[[null,pxF(ld.hobbies)]]]);
+  }
+  return {rows,secs};
+}
+function pxTitle(p){ return (p.leader&&p.leader.t)?p.leader.t:((p.titles&&p.titles[0])||''); }
+function exportText(p){
+  const {rows,secs}=exportRows(p);
+  let t=`【人物档案】${p.name}${p.mediaName?' · '+p.mediaName:''}\n${'─'.repeat(22)}\n`;
+  rows.slice(1).forEach(([k,v])=>{ t+=`${k}：${v}\n`; });
+  secs.forEach(([name,pairs])=>{
+    t+=`\n■ ${name}\n`;
+    pairs.forEach(([k,v])=>{ t+= k?`${k}：${v}\n`:v+'\n'; });
+  });
+  t+=`\n${'─'.repeat(22)}\n导出自 媒体智库中台 · ${new Date().toLocaleDateString('zh-CN')}`;
+  return t;
+}
+window.exportCopy=function(){
+  const p=window._curP; if(!p) return;
+  const t=exportText(p);
+  const done=()=>pxToast('✓ 已复制，可直接粘贴到飞书 / 微信 / 邮件');
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done).catch(()=>pxFallback(t,done)); }
+  else pxFallback(t,done);
+};
+function pxFallback(t,done){
+  const ta=document.createElement('textarea'); ta.value=t;
+  ta.style.cssText='position:fixed;left:-9999px;top:0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ pxToast('复制失败，请重试一次'); }
+  document.body.removeChild(ta);
+}
+function pxDocHTML(p){
+  const {rows,secs}=exportRows(p);
+  const accent=p.mediaColor||'#1D5BBF';
+  const kvRows=rows.map(([k,v])=>`<tr><td style="width:120px;background:#F5F7FA;font-weight:bold;border:1px solid #D9DEE6;padding:6px 10px;white-space:nowrap">${esc(k)}</td><td style="border:1px solid #D9DEE6;padding:6px 10px">${esc(v)}</td></tr>`).join('');
+  const secHTML=secs.map(([name,pairs])=>
+    `<h3 style="font-size:14px;margin:16px 0 6px;border-left:4px solid ${accent};padding-left:8px">${esc(name)}</h3>`+
+    pairs.map(([k,v])=> k
+      ?`<p style="margin:3px 0"><b>${esc(k)}：</b>${esc(v).replace(/\n/g,'<br>')}</p>`
+      :`<p style="margin:3px 0;line-height:1.8">${esc(v).replace(/\n/g,'<br>')}</p>`).join('')
+  ).join('');
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${esc(p.name)} · 人物档案</title></head>
+<body style="font-family:'Microsoft YaHei','PingFang SC',sans-serif;color:#222;line-height:1.7;max-width:680px;margin:0 auto;padding:20px">
+<h1 style="font-size:21px;margin:0 0 2px">${esc(p.name)}</h1>
+<p style="color:#666;margin:0 0 4px;font-size:13px">${esc(pxTitle(p))}${p.mediaName?' · '+esc(p.mediaName):''}</p>
+<table style="border-collapse:collapse;font-size:13px;margin:10px 0">${kvRows}</table>
+${secHTML}
+<p style="color:#999;font-size:11px;margin-top:20px;border-top:1px solid #EEE;padding-top:8px">导出自 媒体智库中台 · ${new Date().toLocaleDateString('zh-CN')}</p>
+</body></html>`;
+}
+window.exportWord=function(){
+  const p=window._curP; if(!p) return;
+  const blob=new Blob(['\ufeff'+pxDocHTML(p)],{type:'application/msword'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`${p.name}_人物档案.doc`;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },400);
+  pxToast('✓ Word 文档已下载（Word / WPS 均可打开）');
+};
+window.exportPDF=function(){
+  const p=window._curP; if(!p) return;
+  const w=window.open('','_blank');
+  if(!w){ pxToast('打印窗口被浏览器拦截，请允许弹窗后重试'); return; }
+  w.document.write(pxDocHTML(p)); w.document.close();
+  w.focus(); setTimeout(()=>{ try{ w.print(); }catch(e){} },350);
+  pxToast('已打开打印页 → 打印机选「另存为 PDF」即可');
+};
+/* 下载 PDF：直链下载构建期生成的静态档案文件（media_hub/assets/pdfs/），缺失时兜底转打印 */
+window.exportPDFFile=async function(){
+  const p=window._curP; if(!p) return;
+  const hex=[...p.name].map(c=>c.codePointAt(0).toString(16).padStart(4,'0')).join('');
+  const url='media_hub/assets/pdfs/'+p.media+'_'+hex+'.pdf?v='+SITE_V;
+  try{
+    const r=await fetch(url);
+    if(!r.ok) throw new Error(r.status);
+    const b=await r.blob();
+    const u=URL.createObjectURL(b);
+    const a=document.createElement('a'); a.href=u; a.download=p.name+'_人物档案.pdf';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(u),4000);
+    pxToast('✓ PDF 已下载');
+  }catch(e){
+    pxToast('该人员 PDF 暂未生成，已转为打印窗口');
+    exportPDF();
+  }
+};
+function renderExportBar(p){
+  const bar=document.getElementById('pExport');
+  if(!bar) return;
+  if(p){ window._curP=p; bar.style.display='flex'; }
+  else{ window._curP=null; bar.style.display='none'; }
+}
+
+function hubPersonHTML(p, hits){
+  const lvBadge = lv => lv ? `<span class="lv ${lv}">${lv==='DP'?'机构':lv}</span>` : '';
+  const F = v => (v && String(v).trim() !== '' && v !== '-') ? String(v) : '';
+  const sec = (t,v,style) => F(v) ? `<div class="dl-col"${style?` style="${style}"`:''}><h5>${t}</h5><p>${esc(v).replace(/\n/g,'<br>')}</p></div>` : '';
+  const row = (...cols) => { const c = cols.filter(Boolean).join(''); return c ? `<div class="dl-row">${c}</div>` : ''; };
+  const kv  = (k,v) => F(v) ? `<div class="kv"><b>${k}</b><span>${esc(v)}</span></div>` : '';
+  const watch = hits.length>1 ? `<div class="pwatch"><span class="pwl">命中 ${hits.length} 位：</span>${hits.slice(0,12)
+      .map(h=>`<span class="pw${h.name===p.name?' on':''}" onclick="hubPick('${esc(h.name)}')">${esc(h.name)}<span style="opacity:.55;font-size:10px">·${esc(h.mediaName)}</span></span>`).join('')}</div>` : '';
+  const seen=new Set();
+  const orgs = p.orgs.filter(o=>{ const key=o.split(/[·\s]+/).filter(Boolean).sort().join('|'); if(seen.has(key))return false; seen.add(key); return true; }).join('；');
+  const marks = p.marks.length ? `<span class="mark">${esc(p.marks.join('、'))}</span>` : '';
+  const meta = `<div class="pmeta">
+      <div class="pmrow"><b>媒体</b><span style="color:${p.mediaColor||'#2563eb'};font-weight:700">${esc(p.mediaName)}</span></div>
+      ${p.titles.length?`<div class="pmrow"><b>职务</b><span>${esc(p.titles.join('；'))}</span></div>`:''}
+      ${orgs?`<div class="pmrow"><b>来自</b><span>${esc(orgs)}</span></div>`:''}
+      ${p.depts.length?`<div class="pmrow"><b>部门</b><span>${esc(p.depts.join('、'))}</span></div>`:''}
+      ${(p.lvs.length||marks)?`<div class="pmrow"><b>层级</b><span>${p.lvs.map(lvBadge).join(' ')} ${marks}</span></div>`:''}
+      ${p.notes.length?`<div class="pmrow"><b>备注</b><span>${esc(p.notes.join('；'))}</span></div>`:''}
+      ${p.brief?`<div class="pbrief">${esc(p.brief)}</div>`:''}
+      ${p.mediaLink?`<a class="pjump" href="${esc(p.mediaLink)}">前往 ${esc(p.mediaName)} 站点 →</a>`:''}
+    </div>`;
+  const ld = p.leader;
+  let detail;
+  if(ld){
+    const basic = kv('性别',ld.gender)+kv('出生年月',ld.birth)+kv('籍贯',ld.origin)+kv('党派及宗教信仰',ld.party);
+    detail = (basic?`<div class="dl-row"><div class="dl-col"><h5>基本信息</h5>${basic}</div></div>`:'')
+      + row(sec('教育背景',ld.edu), sec('奖惩',ld.award))
+      + row(sec('其他社会身份',ld.identity))
+      + row(sec('工作履历',ld.career,'flex:2;min-width:300px'))
+      + row(sec('著作/代表作品',ld.works), sec('个人爱好（及社会关系）',ld.hobbies));
+  }else{
+    detail = `<p class="pnote">该人员暂无独立详细档案（收录于组织架构 / 部门信息）。</p>`;
+  }
+  return watch + meta + detail;
+}
+
+function hubShowPerson(p, hits){
+  if(!p) return;
+  document.getElementById('mName').textContent = p.name;
+  document.getElementById('mTitle').textContent = (p.leader && p.leader.t) ? p.leader.t : (p.titles[0]||'');
+  window._hpHits = hits || [p];
+  renderExportBar(p);
+  const res = document.getElementById('pmResult');
+  if(res) res.innerHTML = hubPersonHTML(p, window._hpHits);
+  const head = document.querySelector('.modal-head');
+  if(head && p.mediaColor) head.style.background = `linear-gradient(135deg,${p.mediaColor},${p.mediaColor}cc)`;
+}
+window.hubPick = function(name){
+  const hits = window._hpHits||[];
+  const p = hits.find(x=>x.name===name) || HUB_PERSONS.find(x=>x.name===name);
+  if(p) hubShowPerson(p, hits.length?hits:[p]);
+};
+function hubOpenSearch(kw){
+  document.getElementById('mBody').innerHTML =
+    `<div class="psearch">🔍 <input id="pmQ" type="text" placeholder="输入人名检索，如：文钊、李蓉…" value="${esc(kw||'')}"></div><div id="pmResult"></div>`;
+  document.getElementById('modalBack').classList.add('on');
+  document.body.style.overflow='hidden';
+  window._searchModal = true;
+  const hits = hubMatch(kw||'');
+  if(hits.length) hubShowPerson(hits[0], hits);
+  else document.getElementById('pmResult').innerHTML = `<p class="pnote">未匹配到人员，换个关键字试试。</p>`;
+  const pq = document.getElementById('pmQ');
+  /* 焦点不抢：从顶部搜索框触发时保持原处继续输入（每键实时刷新浮窗）；仅非头部触发才聚焦窗内框 */
+  if(pq && document.activeElement !== q){ pq.focus(); try{ pq.setSelectionRange(pq.value.length, pq.value.length); }catch(e){} }
+}
+function hubPersonSearch(kw){
+  if(!kw){ if(window._searchModal) closeModal(); return; }
+  const hits = hubMatch(kw);
+  if(!hits.length){ if(window._searchModal) closeModal(); return; }
+  hubOpenSearch(kw);
+}
+function closeModal(){
+  document.getElementById('modalBack').classList.remove('on');
+  document.body.style.overflow='';
+  window._searchModal=false;
+}
+document.addEventListener('input', e=>{
+  if(!e.target || e.target.id!=='pmQ') return;
+  const kw = e.target.value.trim();
+  if(!kw){ document.getElementById('pmResult').innerHTML = `<p class="pnote">输入人名开始检索。</p>`; return; }
+  const hits = hubMatch(kw);
+  if(hits.length) hubShowPerson(hits[0], hits);
+  else document.getElementById('pmResult').innerHTML = `<p class="pnote">未匹配到人员，换个关键字试试。</p>`;
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ const mb=document.getElementById('modalBack'); if(mb && mb.classList.contains('on')) closeModal(); } });
+</script>
+</body>
+</html>
